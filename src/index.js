@@ -4,6 +4,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import connect from '@vkontakte/vk-connect';
 import App from './App';
+import store from "./reducers/ReduxStore";
+import {Provider} from "react-redux";
+
+
 // import registerServiceWorker from './sw';
 
 // Init VK  Mini App
@@ -15,4 +19,7 @@ connect.send('VKWebAppInit', {});
 // Подробнее про сервис воркеры можно почитать тут — https://vk.cc/8MHpmT
 // registerServiceWorker();
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(
+    <Provider store={store}>
+        <App/>
+    </Provider>, document.getElementById('root'))

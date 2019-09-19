@@ -4,11 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "cross-env PORT=10888 react-scripts start",
+    "start": "cross-env PORT=10888 HTTPS=tru react-scripts start",
     "build": "react-scripts build"
   },
   "keywords": [],
-  "author": "",
+  "author": "WinZip <wydo@protonmail.com>",
   "license": "MIT",
   "devDependencies": {
     "cross-env": "^5.2.0",
@@ -29,5 +29,12 @@
     "react-redux": "^7.1.1",
     "redux": "^4.0.4",
     "redux-thunk": "^2.3.0"
-  }
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
+  "repository": "https://github.com/WinZip17/vk-app-blog3425.git"
 }
