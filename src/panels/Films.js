@@ -14,7 +14,7 @@ import '@vkontakte/vkui/dist/vkui.css';
 
 
 const Films = (props) => {
-		debugger
+
 		return (
 			<View id="films" activePanel="tabs">
 				<Panel id="tabs">
@@ -62,8 +62,8 @@ const Films = (props) => {
 									По рейтингу
 								</TabsItem>
 								<TabsItem
-									onClick={() => props.setActiveFilter("yar")}
-									selected={props.state.activeFilter === 'yar'}
+									onClick={() => props.setActiveFilter("year")}
+									selected={props.state.activeFilter === 'year'}
 								>
 									Год
 								</TabsItem>
@@ -87,15 +87,7 @@ const Films = (props) => {
 								allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
 								allowFullScreen></iframe>
 
-						{/*<iframe src="https://blog3425.ru/2345.html" width="350" height="250" frameBorder="0"*/}
-						{/*		allowFullScreen></iframe>*/}
 
-						{/*<iframe src="//vk.com/video_ext.php?oid=118956974&id=169353376&hash=f26a960ee4c71c97&hd=2"*/}
-						{/*		width="320" height="280" frameBorder="0" allowFullScreen></iframe>*/}
-						{/*<iframe*/}
-						{/*	src="http://moonwalk.cc/serial/aeae3e21cb47cbf195d45acb5da2b91e/iframe"*/}
-						{/*	width="610" height="370" frameBorder="0" allowFullScreen></iframe>*/}
-						{/*<a href="https://www.youtube.com/watch?v=yM1QjdoLmxQ">ролик</a>*/}
 					</Group>
 
 

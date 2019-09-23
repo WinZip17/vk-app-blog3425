@@ -1,14 +1,18 @@
 import * as axios from "axios";
 
+const token= "b36e2c01d03db7050e348d03d32f10a7"
 
 const instance = axios.create({
-    baseURL: 'https://frontend-test-assignment-api.abz.agency/api/v1/',
+    baseURL: 'https://moonwalk.cc/api/'
+
 });
 
 export const API = {
-    getUsers(page) {
-        return instance.get(`users?page=${page + 1}&count=6`)
+    getNewFilms() {
+
+        return instance.get(`movies_foreign.json?api_token=${token}`, {'mode': 'no-cors'})
             .then(response => {
+                debugger
                 return response.data;
             })
     },

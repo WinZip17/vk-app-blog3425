@@ -9,7 +9,14 @@ import {
 import Films from "./panels/Films";
 import Cartoons from "./panels/Cartoons";
 import {connect} from "react-redux";
-import {activeArticleAC, activeCategoryAC, activeFilterAC, heightAC, widthAC} from "./reducers/MainReducer";
+import {
+    activeArticleAC,
+    activeCategoryAC,
+    activeFilterAC,
+    getFilmsListThunkCreator,
+    heightAC,
+    widthAC
+} from "./reducers/MainReducer";
 import Preview from "./panels/Preview";
 
 
@@ -17,7 +24,7 @@ class dataApp extends React.Component {
     componentDidMount() {
         this.props.setWidth(window.innerWidth);
         this.props.setHeight(window.innerHeight);
-
+        this.props.getFilmsList()
     }
     render() {
     return (
@@ -52,6 +59,9 @@ let mapDispatchToProps = (dispatch) => {
         },
         setHeight: (height) => {
             dispatch(heightAC(height))
+        },
+        getFilmsList: () => {
+            dispatch(getFilmsListThunkCreator());
         },
     };
 };
