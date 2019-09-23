@@ -3,7 +3,7 @@ import thunk from 'redux-thunk';
 import MainReducer from "./MainReducer";
 
 export let reducers = combineReducers({
-    userList: MainReducer
+    main: MainReducer
 });
 
 let store = createStore(reducers,
