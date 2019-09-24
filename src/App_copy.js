@@ -1,40 +1,37 @@
 import React from 'react';
 import {
-    Cell, FixedLayout,
-    Group, HorizontalScroll, List,
+    Cell,
+    Group, List,
     Panel, PanelHeader,
-    Root, Tabs, TabsItem,
+    Root,
     View
 } from '@vkontakte/vkui';
-import Main from "./panels/Main";
+import Films from "./panels/Main";
 import Cartoons from "./panels/Cartoons";
 import {connect} from "react-redux";
 import {
     activeArticleAC,
     activeCategoryAC,
-    activeFilterAC, activeStoryAC,
+    activeFilterAC,
     getFilmsListThunkCreator,
     heightAC,
     widthAC
 } from "./reducers/MainReducer";
-import Content from "./panels/Content";
+import Preview from "./panels/Preview";
 
 
 class dataApp extends React.Component {
     componentDidMount() {
         this.props.setWidth(window.innerWidth);
         this.props.setHeight(window.innerHeight);
-        // this.props.getFilmsList()
+        this.props.getFilmsList()
     }
-
     render() {
-        debugger
     return (
-        <div >
-            <Content setActiveStory={this.props.setActiveStory} setActiveArticle={this.props.setActiveArticle} setActiveFilter={this.props.setActiveFilter} setActiveCategory={this.props.setActiveCategory} id="header" state={this.props.main} />
-
-            {/*<Preview setActiveArticle={this.props.setActiveArticle} setActiveFilter={this.props.setActiveFilter}  state={this.props.main} id="preview"/>*/}
-        </div>
+        <Root activeView={this.props.main.activeArticle} >
+            <Films setActiveArticle={this.props.setActiveArticle} setActiveFilter={this.props.setActiveFilter} setActiveCategory={this.props.setActiveCategory} id="films" state={this.props.main} />
+            <Preview setActiveArticle={this.props.setActiveArticle} setActiveFilter={this.props.setActiveFilter}  state={this.props.main} id="preview"/>
+        </Root>
     )}
 };
 
@@ -53,9 +50,6 @@ let mapDispatchToProps = (dispatch) => {
         },
         setActiveFilter: (activeFilter) => {
             dispatch(activeFilterAC(activeFilter))
-        },
-        setActiveStory: (activeStory) => {
-            dispatch(activeStoryAC(activeStory))
         },
         setActiveCategory: (activeCategory) => {
             dispatch(activeCategoryAC(activeCategory))

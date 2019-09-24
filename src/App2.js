@@ -22,7 +22,7 @@ import Persik from './panels/Persik';
 import Icon28ChevronBack from '@vkontakte/icons/dist/28/chevron_back';
 import Icon24Back from '@vkontakte/icons/dist/24/back';
 import Icon24Search from '@vkontakte/icons/dist/24/search';
-import Films from "./panels/Films";
+import Films from "./panels/Main";
 import Cartoons from "./panels/Cartoons";
 
 

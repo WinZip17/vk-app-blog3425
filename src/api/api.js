@@ -1,20 +1,24 @@
-import * as axios from "axios";
+import * as axios from "axios-jsonp-pro";
+
 
 const token= "b36e2c01d03db7050e348d03d32f10a7"
 
 const instance = axios.create({
     baseURL: 'https://moonwalk.cc/api/'
-
 });
 
 export const API = {
     getNewFilms() {
-
-        return instance.get(`movies_foreign.json?api_token=${token}`, {'mode': 'no-cors'})
+        return instance.get(`serials_foreign.json?api_token=${token}`)
             .then(response => {
                 debugger
+                console.log(response);
                 return response.data;
             })
+            .catch(function (error) {
+                debugger
+                console.log(error);
+            });
     },
     getUserById(id) {
         return instance.get(`users/${id}`)

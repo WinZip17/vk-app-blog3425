@@ -6,6 +6,7 @@ const SET_FILTER= 'SET_FILTER';
 const SET_CATEGORY= 'SET_CATEGORY';
 const SET_WIDTH= 'SET_WIDTH';
 const SET_HEIGHT= 'SET_HEIGHT';
+const SET_STORY= 'SET_STORY';
 const GET_NEW_FILMS_LIST= 'GET_NEW_FILMS_LIST';
 
 
@@ -18,7 +19,8 @@ let initialState = {
     activeCategory: "films",
     width: "20",
     height: "20",
-    filmsList: {}
+    filmsList: {},
+    activeStory: 'more'
 
 };
 
@@ -34,6 +36,8 @@ const MainReducer = (state = initialState, action) => {
             return {...state, activeCategory: action.activeCategory};
         case SET_FILTER:
             return {...state, activeFilter: action.activeFilter};
+        case SET_STORY:
+            return {...state, activeStory: action.activeStory};
         case SET_WIDTH:
             return {...state, width: action.width};
         case SET_HEIGHT:
@@ -49,6 +53,7 @@ const MainReducer = (state = initialState, action) => {
 export const activeArticleAC = (article) => ({type: SET_ARTICLE, article: article});
 export const activeFilterAC = (activeFilter) => ({type: SET_FILTER, activeFilter: activeFilter});
 export const activeCategoryAC = (activeCategory) => ({type: SET_CATEGORY, activeCategory: activeCategory});
+export const activeStoryAC = (activeStory) => ({type: SET_STORY, activeStory: activeStory});
 export const widthAC = (width) => ({type: SET_WIDTH, width: width});
 export const heightAC = (height) => ({type: SET_HEIGHT, height: height});
 const setTokenAC = (token) => ({type: SET_TOKEN, token: token});

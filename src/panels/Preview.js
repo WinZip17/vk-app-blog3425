@@ -7,11 +7,10 @@ import {
 
 
 const Preview = () => {
-
     return (
-        <View>
+        <Div>
 Тут типа фильм показывает
-        </View>
+        </Div>
     )
 };
 
