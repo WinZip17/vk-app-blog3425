@@ -1,37 +1,153 @@
 import React from 'react';
 import {
-    Cell, FixedLayout,
-    Group, HorizontalScroll, List,
-    Panel, PanelHeader,
-    Root, Tabs, TabsItem,
-    View
+    Group,
+    IS_PLATFORM_ANDROID, IS_PLATFORM_IOS, ModalPage, ModalPageHeader, ModalRoot, List, Cell, Switch
 } from '@vkontakte/vkui';
-import Main from "./panels/Main";
-import Cartoons from "./panels/Cartoons";
 import {connect} from "react-redux";
 import {
     activeArticleAC,
     activeCategoryAC,
-    activeFilterAC, activeStoryAC,
+    activeFilterAC, activeModalAC, activeStoryAC,
     getFilmsListThunkCreator,
-    heightAC,
+    heightAC, modalHistoryAC, setSchemeAC,
     widthAC
 } from "./reducers/MainReducer";
 import Content from "./panels/Content";
+import connectVK from '@vkontakte/vk-connect';
+import Icon24Cancel from '@vkontakte/icons/dist/24/cancel';
+import Icon24Done from '@vkontakte/icons/dist/24/done';
+import Checkbox from "@vkontakte/vkui/dist/es6/components/Checkbox/Checkbox";
+import FormLayout from "@vkontakte/vkui/dist/es6/components/FormLayout/FormLayout";
+import FormLayoutGroup from "@vkontakte/vkui/dist/es6/components/FormLayoutGroup/FormLayoutGroup";
+import HeaderButton from "@vkontakte/vkui/dist/es6/components/HeaderButton/HeaderButton";
+import Select from "@vkontakte/vkui/dist/es6/components/Select/Select";
+import Button from "@vkontakte/vkui/dist/es6/components/Button/Button";
+import Input from "@vkontakte/vkui/dist/es6/components/Input/Input";
+
+const MODAL_PAGE_SEARCH = 'MODAL_PAGE_SEARCH';
+const MODAL_PAGE_SETTINGS = 'MODAL_PAGE_SETTINGS';
 
 
 class dataApp extends React.Component {
+
     componentDidMount() {
+        connectVK.send('VKWebAppUpdateConfig', {});
         this.props.setWidth(window.innerWidth);
         this.props.setHeight(window.innerHeight);
         // this.props.getFilmsList()
     }
 
+    setActiveModal(activeModal) {
+        activeModal = activeModal || null;
+        let modalHistory = this.props.main.modalHistory ? [...this.props.main.modalHistory] : [];
+        if (activeModal === null) {
+            modalHistory = [];
+            this.props.setActiveStory(null);
+        } else if (modalHistory.indexOf(activeModal) !== -1) {
+            modalHistory = modalHistory.splice(0, modalHistory.indexOf(activeModal) + 1);
+        } else {
+            modalHistory.push(activeModal);
+        }
+        this.props.setActiveModal(activeModal);
+        this.props.setModalHistory(modalHistory);
+    };
+
+
+    modalBack = () => {
+        this.setActiveModal(this.props.main.modalHistory[this.props.main.modalHistory.length - 2]);
+    };
+
+
+
     render() {
-        debugger
-    return (
+        const modal = (
+            <ModalRoot activeModal={this.props.main.activeModal}>
+                <ModalPage
+                    id={MODAL_PAGE_SEARCH}
+                    onClose={() => {this.modalBack()}}
+                    header={
+                        <ModalPageHeader
+                            left={IS_PLATFORM_ANDROID && <HeaderButton onClick={() => {this.modalBack()}}><Icon24Cancel /></HeaderButton>}
+                            right={<HeaderButton onClick={() => {this.modalBack()}}>{IS_PLATFORM_IOS ? 'Готово' : <Icon24Done />}</HeaderButton>}
+                        >
+                            Фильтры
+                        </ModalPageHeader>
+                    }
+                >
+                    <FormLayout>
+                        <FormLayoutGroup>
+                            <Input
+                                type="text"
+                                top="Поиск по названию"
+                                placeholder="Введите название фильма"
+                                name="search"
+                            />
+                            <Button size="xl">Найти</Button>
+                        </FormLayoutGroup>
+                        <FormLayoutGroup>
+                            <Select top="Категория" placeholder="Выберите категорию">
+                                <option value="films">Фильмы</option>
+                                <option value="cartoons">Мультфильмы</option>
+                                <option value="series">Сериалы</option>
+                                <option value="anime">Аниме</option>
+                            </Select>
+                        </FormLayoutGroup>
+                        <FormLayoutGroup>
+                            <Select top="Сортировать" placeholder="Выберите сортировку">
+                                <option value="top">По рейтингу</option>
+                                <option value="year">По дате</option>
+                            </Select>
+                        </FormLayoutGroup>
+                        <FormLayoutGroup>
+                            <Select top="Жанр" placeholder="Выберите жанр">
+                                <option value="actionMovie">Боевик</option>
+                                <option value="comedy">Комедия</option>
+                            </Select>
+                        </FormLayoutGroup>
+
+                    </FormLayout>
+                </ModalPage>
+
+                <ModalPage
+                    id={MODAL_PAGE_SETTINGS}
+                    onClose={() => {this.modalBack();
+                        this.props.setActiveStory(null)}}
+                    header={
+                        <ModalPageHeader
+                            left={IS_PLATFORM_ANDROID && <HeaderButton onClick={() => {this.modalBack()}}><Icon24Cancel /></HeaderButton>}
+                            right={<HeaderButton onClick={() => {this.modalBack()}}>{IS_PLATFORM_IOS ? 'Готово' : <Icon24Done />}</HeaderButton>}
+                        >
+                            Настройки
+                        </ModalPageHeader>
+                    }
+                >
+                    <FormLayout>
+                        <FormLayoutGroup top="Тема оформления">
+                                <List>
+                                    {/*<Cell asideContent={this.props.main.scheme ? <Switch defaultChecked  onChange={() => {this.props.setScheme(false)}} /> : <Switch onChange={() => {this.props.setScheme(true)}} />}>*/}
+                                    {/*    Темная тема*/}
+                                    {/*</Cell> */}
+                                    <Cell  asideContent={<Switch  id="scheme"   onChange={this.props.setScheme} />}>
+                                        Темная тема
+                                    </Cell>
+                                </List>
+                        </FormLayoutGroup>
+                    </FormLayout>
+                </ModalPage>
+
+
+            </ModalRoot>
+        );
+
+
+
+        return (
         <div >
-            <Content setActiveStory={this.props.setActiveStory} setActiveArticle={this.props.setActiveArticle} setActiveFilter={this.props.setActiveFilter} setActiveCategory={this.props.setActiveCategory} id="header" state={this.props.main} />
+            <Content setActiveStory={this.props.setActiveStory} setActiveArticle={this.props.setActiveArticle}
+                     setActiveFilter={this.props.setActiveFilter} setActiveCategory={this.props.setActiveCategory}
+                     setActiveModal={this.props.setActiveModal} id="header" state={this.props.main} modal={modal}/>
+
+
 
             {/*<Preview setActiveArticle={this.props.setActiveArticle} setActiveFilter={this.props.setActiveFilter}  state={this.props.main} id="preview"/>*/}
         </div>
@@ -59,6 +175,15 @@ let mapDispatchToProps = (dispatch) => {
         },
         setActiveCategory: (activeCategory) => {
             dispatch(activeCategoryAC(activeCategory))
+        },
+        setActiveModal: (activeModel) => {
+            dispatch(activeModalAC(activeModel))
+        },
+        setModalHistory: (modalHistory) => {
+            dispatch(modalHistoryAC(modalHistory))
+        },
+        setScheme: (scheme) => {
+            dispatch(setSchemeAC(scheme.currentTarget.checked))
         },
         setWidth: (width) => {
             dispatch(widthAC(width))

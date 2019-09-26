@@ -12,12 +12,19 @@ import {
 import '@vkontakte/vkui/dist/vkui.css';
 import Main from "./Main";
 
-
+import Epic from '@vkontakte/vkui/dist/components/Epic/Epic';
+import Tabbar from '@vkontakte/vkui/dist/components/Tabbar/Tabbar';
+import TabbarItem from '@vkontakte/vkui/dist/components/TabbarItem/TabbarItem';
+import Icon28Newsfeed from '@vkontakte/icons/dist/28/newsfeed';
+import Icon28Search from '@vkontakte/icons/dist/28/search';
+import Icon28Notifications from '@vkontakte/icons/dist/28/notifications';
+import Icon28SettingsOutline from '@vkontakte/icons/dist/28/settings_outline';
+import Icon28FavoriteOutline from '@vkontakte/icons/dist/28/favorite_outline';
 
 const Content = (props) => {
 
     return (
-        <View id={props.id} activePanel="tabs">
+        <View id={props.id} activePanel="tabs" modal={props.modal}>
             <Panel id="tabs">
                 <PanelHeader
                     noShadow>
@@ -53,100 +60,44 @@ const Content = (props) => {
                         </HorizontalScroll>
                     </Tabs>
                 </FixedLayout>
-                <Group title="фильтры">
-                    <Tabs type="buttons">
-                        <HorizontalScroll>
-                            <TabsItem
-                                onClick={() => props.setActiveFilter("top")}
-                                selected={props.state.activeFilter === 'top'}
-                            >
-                                По рейтингу
-                            </TabsItem>
-                            <TabsItem
-                                onClick={() => props.setActiveFilter("year")}
-                                selected={props.state.activeFilter === 'year'}
-                            >
-                                Год
-                            </TabsItem>
-                            <TabsItem
-                                onClick={() => props.setActiveFilter("genre")}
-                                selected={props.state.activeFilter === 'genre'}
-                            >
-                                Жанр
-                            </TabsItem>
-                            <TabsItem
-                                onClick={() => props.setActiveFilter("inter")}
-                                selected={props.state.activeFilter === 'inter'}
-                            >
-                                Сначала интересные
-                            </TabsItem>
-                        </HorizontalScroll>
-                    </Tabs>
-                </Group>
+
+                <Epic activeStory={props.state.activeStory} tabbar={
+                    <Tabbar>
+                        <TabbarItem
+                            onClick={() => {props.setActiveStory("feed")}}
+                            selected={props.state.activeStory === 'feed'}
+                            data-story="feed"
+                        ><Icon28Newsfeed /></TabbarItem>
+                        <TabbarItem
+                            onClick={() => {
+                                props.setActiveStory("discover");
+                                props.setActiveModal("MODAL_PAGE_SEARCH")}}
+                            selected={props.state.activeStory === 'discover'}
+                            data-story="discover"
+                        ><Icon28Search /></TabbarItem>
+                        <TabbarItem
+                            onClick={() => {props.setActiveStory("favorite")}}
+                            selected={props.state.activeStory === 'favorite'}
+                            data-story="notifications"
+                        ><Icon28FavoriteOutline /></TabbarItem>
+                        <TabbarItem
+                            onClick={() => {props.setActiveStory("notifications")}}
+                            selected={props.state.activeStory === 'notifications'}
+                            data-story="notifications"
+                        ><Icon28Notifications /></TabbarItem>
+                        <TabbarItem
+                            onClick={() => {props.setActiveStory("more");
+                                props.setActiveModal("MODAL_PAGE_SETTINGS")}}
+                            selected={props.state.activeStory === 'more'}
+                            data-story="more"
+                        ><Icon28SettingsOutline /></TabbarItem>
+                    </Tabbar>
+                }>
+
+                </Epic>
                 <Group>
                     <Main/>
                 </Group>
-                {/*<Epic activeStory={props.state.activeStory} tabbar={*/}
-                {/*    <Tabbar>*/}
-                {/*        <TabbarItem*/}
-                {/*            onClick={() => {props.setActiveStory("feed")}}*/}
-                {/*            selected={props.state.activeStory === 'feed'}*/}
-                {/*            data-story="feed"*/}
-                {/*            text="Новости"*/}
-                {/*        ><Icon28Newsfeed /></TabbarItem>*/}
-                {/*        <TabbarItem*/}
-                {/*            onClick={() => {props.setActiveStory("feed")}}*/}
-                {/*            selected={props.state.activeStory === 'discover'}*/}
-                {/*            data-story="discover"*/}
-                {/*            text="Поиск"*/}
-                {/*        ><Icon28Search /></TabbarItem>*/}
-                {/*        <TabbarItem*/}
-                {/*            onClick={() => {props.setActiveStory("feed")}}*/}
-                {/*            selected={props.state.activeStory === 'messages'}*/}
-                {/*            data-story="messages"*/}
-                {/*            label="12"*/}
-                {/*            text="Сообщения"*/}
-                {/*        ><Icon28Messages /></TabbarItem>*/}
-                {/*        <TabbarItem*/}
-                {/*            onClick={() => {props.setActiveStory("feed")}}*/}
-                {/*            selected={props.state.activeStory === 'notifications'}*/}
-                {/*            data-story="notifications"*/}
-                {/*            text="Уведомлен."*/}
-                {/*        ><Icon28Notifications /></TabbarItem>*/}
-                {/*        <TabbarItem*/}
-                {/*            onClick={() => {props.setActiveStory("feed")}}*/}
-                {/*            selected={props.state.activeStory === 'more'}*/}
-                {/*            data-story="more"*/}
-                {/*            text="Ещё"*/}
-                {/*        ><Icon28More /></TabbarItem>*/}
-                {/*    </Tabbar>*/}
-                {/*}>*/}
-                {/*    <View id="feed" activePanel="feed">*/}
-                {/*        <Panel id="feed">*/}
-                {/*            <PanelHeader>Feed</PanelHeader>*/}
-                {/*        </Panel>*/}
-                {/*    </View>*/}
-                {/*    <View id="discover" activePanel="discover">*/}
-                {/*        <Panel id="discover">*/}
-                {/*            <PanelHeader>Discover</PanelHeader>*/}
-                {/*        </Panel>*/}
-                {/*    </View>*/}
-                {/*    <View id="messages" activePanel="messages">*/}
-                {/*        <Panel id="messages">*/}
-                {/*            <PanelHeader>Messages</PanelHeader>*/}
-                {/*        </Panel>*/}
-                {/*    </View>*/}
-                {/*    <View id="notifications" activePanel="notifications">*/}
-                {/*        <Panel id="notifications">*/}
-                {/*            <PanelHeader>Notifications</PanelHeader>*/}
-                {/*        </Panel>*/}
-                {/*    </View>*/}
-                {/*    <View id="more" activePanel="more">*/}
-                {/*        <Panel id="more">*/}
-                {/*            <PanelHeader>More</PanelHeader>*/}
-                {/*        </Panel>*/}
-                {/*    </View>*/}
-                {/*</Epic>*/}
             </Panel>
         </View>
     );

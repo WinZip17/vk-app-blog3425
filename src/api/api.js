@@ -11,7 +11,7 @@ export const API = {
     getNewFilms() {
         return instance.get(`serials_foreign.json?api_token=${token}`)
             .then(response => {
-                debugger
+
                 console.log(response);
                 return response.data;
             })

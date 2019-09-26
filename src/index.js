@@ -9,6 +9,19 @@ import {Provider} from "react-redux";
 
 
 // import registerServiceWorker from './sw';
+// connect.subscribe((e) => {
+//     switch (e.detail.type) {
+//         case 'VKWebAppUpdateConfig':
+//             let schemeAttribute = document.createAttribute('scheme');
+//             schemeAttribute.value = e.detail.data.scheme ? e.detail.data.scheme : 'client_light';
+//             document.body.attributes.setNamedItem(schemeAttribute);
+//             break;
+//
+//         default:
+//             console.log(e.detail.type);
+//     }
+// });
+
 
 // Init VK  Mini App
 connect.send('VKWebAppInit', {});
