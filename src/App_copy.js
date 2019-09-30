@@ -6,8 +6,8 @@ import {
     Root,
     View
 } from '@vkontakte/vkui';
-import Films from "./panels/Main";
-import Cartoons from "./panels/Cartoons";
+import Films from "./components/Main";
+import Cartoons from "./components/Cartoons";
 import {connect} from "react-redux";
 import {
     activeArticleAC,
@@ -17,7 +17,7 @@ import {
     heightAC,
     widthAC
 } from "./reducers/MainReducer";
-import Preview from "./panels/Preview";
+import Preview from "./components/Preview";
 
 
 class dataApp extends React.Component {

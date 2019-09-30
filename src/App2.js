@@ -17,13 +17,13 @@ import {
     Root
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
-import Home from './panels/Home';
-import Persik from './panels/Persik';
+import Home from './components/Home';
+import Persik from './components/Persik';
 import Icon28ChevronBack from '@vkontakte/icons/dist/28/chevron_back';
 import Icon24Back from '@vkontakte/icons/dist/24/back';
 import Icon24Search from '@vkontakte/icons/dist/24/search';
-import Films from "./panels/Main";
-import Cartoons from "./panels/Cartoons";
+import Films from "./components/Main";
+import Cartoons from "./components/Cartoons";
 
 
 const osname = platform();

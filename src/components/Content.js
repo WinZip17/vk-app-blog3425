@@ -4,7 +4,7 @@ import {
     Group,
     HorizontalScroll,
     Panel,
-    PanelHeader, 
+    PanelHeader,
     Tabs,
     TabsItem,
     View
@@ -25,7 +25,7 @@ const Content = (props) => {
 
     return (
         <View id={props.id} activePanel="tabs" modal={props.modal}>
-            <Panel id="tabs">
+            <Panel id="tabs" >
                 <PanelHeader
                     noShadow>
                     Заголовочек
@@ -58,47 +58,49 @@ const Content = (props) => {
                                 Аниме
                             </TabsItem>
                         </HorizontalScroll>
+
                     </Tabs>
+                    <Epic activeStory={props.state.activeStory} tabbar={
+                        <Tabbar>
+                            <TabbarItem
+                                onClick={() => {props.setActiveStory("feed")}}
+                                selected={props.state.activeStory === 'feed'}
+                                data-story="feed"
+                            ><Icon28Newsfeed /></TabbarItem>
+                            <TabbarItem
+                                onClick={() => {
+                                    props.setActiveStory("discover");
+                                    props.setActiveModal("MODAL_PAGE_SEARCH")}}
+                                selected={props.state.activeStory === 'discover'}
+                                data-story="discover"
+                            ><Icon28Search /></TabbarItem>
+                            <TabbarItem
+                                onClick={() => {props.setActiveStory("favorite")}}
+                                selected={props.state.activeStory === 'favorite'}
+                                data-story="notifications"
+                            ><Icon28FavoriteOutline /></TabbarItem>
+                            <TabbarItem
+                                onClick={() => {props.setActiveStory("notifications")}}
+                                selected={props.state.activeStory === 'notifications'}
+                                data-story="notifications"
+                            ><Icon28Notifications /></TabbarItem>
+                            <TabbarItem
+                                onClick={() => {props.setActiveStory("more");
+                                    props.setActiveModal("MODAL_PAGE_SETTINGS")}}
+                                selected={props.state.activeStory === 'more'}
+                                data-story="more"
+                            ><Icon28SettingsOutline /></TabbarItem>
+                        </Tabbar>
+                    }>
+
+                    </Epic>
                 </FixedLayout>
-
-                <Epic activeStory={props.state.activeStory} tabbar={
-                    <Tabbar>
-                        <TabbarItem
-                            onClick={() => {props.setActiveStory("feed")}}
-                            selected={props.state.activeStory === 'feed'}
-                            data-story="feed"
-                        ><Icon28Newsfeed /></TabbarItem>
-                        <TabbarItem
-                            onClick={() => {
-                                props.setActiveStory("discover");
-                                props.setActiveModal("MODAL_PAGE_SEARCH")}}
-                            selected={props.state.activeStory === 'discover'}
-                            data-story="discover"
-                        ><Icon28Search /></TabbarItem>
-                        <TabbarItem
-                            onClick={() => {props.setActiveStory("favorite")}}
-                            selected={props.state.activeStory === 'favorite'}
-                            data-story="notifications"
-                        ><Icon28FavoriteOutline /></TabbarItem>
-                        <TabbarItem
-                            onClick={() => {props.setActiveStory("notifications")}}
-                            selected={props.state.activeStory === 'notifications'}
-                            data-story="notifications"
-                        ><Icon28Notifications /></TabbarItem>
-                        <TabbarItem
-                            onClick={() => {props.setActiveStory("more");
-                                props.setActiveModal("MODAL_PAGE_SETTINGS")}}
-                            selected={props.state.activeStory === 'more'}
-                            data-story="more"
-                        ><Icon28SettingsOutline /></TabbarItem>
-                    </Tabbar>
-                }>
-
-                </Epic>
-                <Group>
-                    <Main/>
+                <Group className="mainContainer">
+                    {props.state.isReady ? <Main setActiveModal={props.setActiveModal} setIframeUrl={props.setIframeUrl}
+                                                 list={props.state.filmsList} setMoviesInfo={props.setMoviesInfo}/> : <div></div>}
                 </Group>
             </Panel>
+
         </View>
     );
 
