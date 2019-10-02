@@ -3,26 +3,47 @@
     margin-bottom: 60px;
 }
 
+.searchContainer {
+    margin-bottom: 60px;
+}
+
 .poster {
-    width: 150px;
+    max-width: 320px;
+    width: 100%;
+}
+
+.listDisplay {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-content: stretch;
+    align-items: stretch;
+}
+
+.moviesCellDiv {
+    height: 100%;
+
 }
 
 .moviesCell {
     cursor: pointer;
+    width: 30%;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    margin: 5px;
 }
 
 .moviesCell-text {
-    padding: 15px;
-    align-self: center;
-    flex-basis: 70%;
-    flex-grow: 4;
+    /*padding: 15px;*/
+    /*align-self: center;*/
+    /*flex-basis: 70%;*/
+    /*flex-grow: 4;*/
 }
 
 .moviesCell-img {
-    flex-basis: 10%;
-    flex-grow: 1;
+    /*flex-basis: 10%;*/
+    /*flex-grow: 1;*/
 }
 
 iframe {
@@ -33,6 +54,7 @@ iframe {
 
 h1, h2, p{
     word-wrap: break-word;
+
     width: 100%;
     white-space: normal !important;
 }

@@ -12,47 +12,67 @@ import {
 import '@vkontakte/vkui/dist/vkui.css';
 import Main from "./Main";
 
-import Epic from '@vkontakte/vkui/dist/components/Epic/Epic';
-import Tabbar from '@vkontakte/vkui/dist/components/Tabbar/Tabbar';
-import TabbarItem from '@vkontakte/vkui/dist/components/TabbarItem/TabbarItem';
-import Icon28Newsfeed from '@vkontakte/icons/dist/28/newsfeed';
-import Icon28Search from '@vkontakte/icons/dist/28/search';
-import Icon28Notifications from '@vkontakte/icons/dist/28/notifications';
-import Icon28SettingsOutline from '@vkontakte/icons/dist/28/settings_outline';
-import Icon28FavoriteOutline from '@vkontakte/icons/dist/28/favorite_outline';
+import {connect} from "react-redux";
+import {
+    activeArticleAC,
+    activeCategoryAC,
+    activeFilterAC,
+    activeModalAC,
+    activeStoryAC,
+    getMovieListThunkCreator,
+    heightAC,
+    modalHistoryAC,
+    setCamripAC,
+    setIframeUrlAC,
+    setMoviesInfoAC,
+    setOrderAC,
+    setSchemeAC,
+    setSortAC,
+    setTypesAC, setYearAC,
+    widthAC
+} from "../reducers/MainReducer";
+import EpicMenu from "./EpicMenu";
 
-const Content = (props) => {
+const DataContent = (props) => {
 
     return (
         <View popout={props.state.isReady}  id={props.id} activePanel="tabs" modal={props.modal}>
             <Panel id="tabs" >
                 <PanelHeader
                     noShadow>
-                    Заголовочек
+                    KINOMIX
                 </PanelHeader>
                 <FixedLayout vertical="top">
                     <Tabs theme="header" type="buttons">
                         <HorizontalScroll>
                             <TabsItem
-                                onClick={() => props.setActiveCategory("films")}
+                                onClick={() => {
+                                    props.setActiveCategory("films");
+                                    props.setTypes("foreign-movie,russian-movie")}}
                                 selected={props.state.activeCategory === 'films'}
                             >
                                 Фильмы
                             </TabsItem>
                             <TabsItem
-                                onClick={() => props.setActiveCategory("cartoons")}
+                                onClick={() => {
+                                    props.setActiveCategory("cartoons");
+                                    props.setTypes("foreign-cartoon,russian-cartoon,soviet-cartoon")}}
                                 selected={props.state.activeCategory === 'cartoons'}
                             >
                                 Мультфильмы
                             </TabsItem>
                             <TabsItem
-                                onClick={() => props.setActiveCategory("series")}
+                                onClick={() => {
+                                    props.setActiveCategory("series");
+                                    props.setTypes("foreign-serial,cartoon-serial,documentary-serial,russian-serial,multi-part-film,russian-documentary-serial,russian-cartoon-serial")}}
                                 selected={props.state.activeCategory === 'series'}
                             >
                                 Сериалы
                             </TabsItem>
                             <TabsItem
-                                onClick={() => props.setActiveCategory("anime")}
+                                onClick={() => {
+                                    props.setActiveCategory("anime");
+                                    props.setTypes("anime,anime-serial")}}
                                 selected={props.state.activeCategory === 'anime'}
                             >
                                 Аниме
@@ -60,52 +80,84 @@ const Content = (props) => {
                         </HorizontalScroll>
 
                     </Tabs>
-                    <Epic activeStory={props.state.activeStory} tabbar={
-                        <Tabbar>
-                            <TabbarItem
-                                onClick={() => {props.setActiveStory("feed")}}
-                                selected={props.state.activeStory === 'feed'}
-                                data-story="feed"
-                            ><Icon28Newsfeed /></TabbarItem>
-                            <TabbarItem
-                                onClick={() => {
-                                    props.setActiveStory("discover");
-                                    props.setActiveModal("MODAL_PAGE_SEARCH")}}
-                                selected={props.state.activeStory === 'discover'}
-                                data-story="discover"
-                            ><Icon28Search /></TabbarItem>
-                            <TabbarItem
-                                onClick={() => {props.setActiveStory("favorite")}}
-                                selected={props.state.activeStory === 'favorite'}
-                                data-story="notifications"
-                            ><Icon28FavoriteOutline /></TabbarItem>
-                            <TabbarItem
-                                onClick={() => {props.setActiveStory("notifications")}}
-                                selected={props.state.activeStory === 'notifications'}
-                                data-story="notifications"
-                            ><Icon28Notifications /></TabbarItem>
-                            <TabbarItem
-                                onClick={() => {props.setActiveStory("more");
-                                    props.setActiveModal("MODAL_PAGE_SETTINGS")}}
-                                selected={props.state.activeStory === 'more'}
-                                data-story="more"
-                            ><Icon28SettingsOutline /></TabbarItem>
-                        </Tabbar>
-                    }>
-
-                    </Epic>
+                    <EpicMenu />
                 </FixedLayout>
                 <Group className="mainContainer">
+                    {props.state.filmsList.length === 0 ? <p><b>По Вашему запросу ничего не найдено. <br/> Попробуйте другие критерии поиска </b></p> : <div/>}
                     {props.state.isReady === null ? <Main setActiveModal={props.setActiveModal} setIframeUrl={props.setIframeUrl}
                                                  list={props.state.filmsList} setMoviesInfo={props.setMoviesInfo}/> : <div></div>}
                 </Group>
             </Panel>
-
         </View>
     );
 
 }
 
+
+let mapStateToProps = (state) => {
+    return {
+        state: state.main
+    };
+};
+
+let mapDispatchToProps = (dispatch) => {
+    return {
+        setActiveArticle: (article) => {
+            dispatch(activeArticleAC(article))
+        },
+        setActiveFilter: (activeFilter) => {
+            dispatch(activeFilterAC(activeFilter))
+        },
+        setActiveStory: (activeStory) => {
+            dispatch(activeStoryAC(activeStory))
+        },
+        setActiveCategory: (activeCategory) => {
+            dispatch(activeCategoryAC(activeCategory))
+        },
+        setActiveModal: (activeModel) => {
+            dispatch(activeModalAC(activeModel))
+        },
+        setModalHistory: (modalHistory) => {
+            dispatch(modalHistoryAC(modalHistory))
+        },
+        setIframeUrl: (defaultIframeUrl) => {
+            dispatch(setIframeUrlAC(defaultIframeUrl))
+        },
+        setMoviesInfo: (moviesInfo) => {
+            dispatch(setMoviesInfoAC(moviesInfo))
+        },
+        setScheme: (scheme) => {
+            dispatch(setSchemeAC(scheme.currentTarget.checked))
+        },
+        setWidth: (width) => {
+            dispatch(widthAC(width))
+        },
+        setHeight: (height) => {
+            dispatch(heightAC(height))
+        },
+        getMovieList: (listOptions) => {
+            dispatch(getMovieListThunkCreator(listOptions));
+        },
+        setSort: (sort) => {
+            dispatch(setSortAC(sort))
+        },
+        setOrder: (order) => {
+            dispatch(setOrderAC(order))
+        },
+        setTypes: (types) => {
+            dispatch(setTypesAC(types))
+        },
+        setCamrip: (camrip) => {
+            dispatch(setCamripAC(camrip))
+        },
+        setYear: (year) => {
+            dispatch(setYearAC(year))
+        }
+    };
+};
+
+
+const Content = connect(mapStateToProps, mapDispatchToProps)(DataContent);
 
 
 export default Content;

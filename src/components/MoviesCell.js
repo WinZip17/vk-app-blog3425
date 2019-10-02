@@ -1,27 +1,24 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import {Cell, Div} from '@vkontakte/vkui';
-import defaultPoster from "../img/defaultPoster.png"
 
 const MoviesCell = (props) => {
 
 	return (
-			<Cell  onClick={() => {
-                props.setIframeUrl(props.movies.iframe_url);
+			<div className='moviesCell' onClick={() => {
+                props.setIframeUrl(props.movies.link);
 				props.setMoviesInfo(props.movies);
 			    props.setActiveModal("MODAL_PAGE_PLAY")
 			}}>
-				<div className='moviesCell'>
+				<div className="moviesCellDiv">
 					<div className='moviesCell-img '>
-						{ "material_data" in props.movies && "poster" in props.movies.material_data ? <img className="poster" src={props.movies.material_data.poster || require("../img/defaultPoster.png")} alt='poster'/> : <img className="poster"  src={require("../img/defaultPoster.png")} alt='poster'/>  }
+						{ "material_data" in props.movies && "poster_url" in props.movies.material_data ? <img className="poster" src={props.movies.material_data.poster_url || require("../img/defaultPoster.png")} alt='poster'/> : <img className="poster"  src={require("../img/defaultPoster.png")} alt='poster'/>  }
 					</div>
 					<div className='moviesCell-text'>
-						<h2>{props.movies.title_ru}</h2>
+						<p><b>{props.movies.title}</b></p>
 						{props.movies.year ? <p>Год: {props.movies.year}</p> : ""}
 					</div>
 
 				</div>
-			</Cell>
+			</div>
 	)
 }
 
