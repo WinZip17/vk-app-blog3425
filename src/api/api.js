@@ -1,14 +1,12 @@
 import * as axios from "axios-jsonp-pro";
 
-
 const token= "b36e2c01d03db7050e348d03d32f10a7"
-
 const instance = axios.create({
     baseURL: 'https://moonwalk.cc/api/'
 });
 
 export const API = {
-    getNewFilms() {
+    getNewFilms1() {
         return instance.get(`serials_foreign.json?api_token=${token}`)
             .then(response => {
                 debugger
@@ -20,17 +18,32 @@ export const API = {
                 console.log(error);
             });
     },
-    getUserById(id) {
-        return instance.get(`users/${id}`)
-            .then(response => {
-                return response.data;
-            })
-    },
-    getPositions() {
-        return instance.get(`positions`)
-            .then(response => {
-                return response.data;
-            })
+    // getNewFilms2() {
+    //     return fetch( "../db/serials_russian")
+    //         .then(function (response) {
+    //             debugger
+    //             return response.json();
+    //         })
+    //         .then(function (data) {
+    //             debugger
+    //             if (data) {
+    //
+    //             } else {
+    //                 // proccess server errors
+    //             }
+    //         })
+    //         .catch(function (error) {
+    //             debugger
+    //             // proccess network errors
+    //         });
+    // },
+    getNewFilms(type) {
+
+        return fetch(`/db/${type}.json`, {headers : {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }})
+            .then((response) => response.json())
     },
     getToken() {
         return instance.get(`token`)

@@ -1,5 +1,7 @@
 import {API} from "../api/api";
 import {dataTest} from "../api/movies_updates";
+import React from "react";
+import ScreenSpinner from "@vkontakte/vkui/dist/es6/components/ScreenSpinner/ScreenSpinner";
 
 const SET_TOKEN = 'SET_TOKEN';
 const SET_ARTICLE= 'SET_ARTICLE';
@@ -36,7 +38,7 @@ let initialState = {
     activeModal: null,
     modalHistory: [],
     scheme: false,
-    isReady: false,
+    isReady: <ScreenSpinner />,
     defaultIframeUrl: "",
     moviesInfo: {
         title_ru: "",
@@ -77,6 +79,12 @@ const MainReducer = (state = initialState, action) => {
         case SET_MODAL_HISTORY:
             return {...state, modalHistory: action.modalHistory};
         case SET_IFRAME_URL:
+            let url = action.defaultIframeUrl;
+            if (url.includes("http:")) {
+                url = "https" + url.slice(4);
+            }
+            debugger
+            console.log(url);
             return {...state, defaultIframeUrl: action.defaultIframeUrl};
         case SET_MOVIE_INFO:
             return {...state, moviesInfo: action.moviesInfo};
@@ -85,7 +93,22 @@ const MainReducer = (state = initialState, action) => {
         case SET_HEIGHT:
             return {...state, height: action.height};
         case GET_NEW_FILMS_LIST:
-            return {...state, filmsList: action.filmsList, isReady: true};
+            debugger
+            switch (action.moviesType) {
+                case "movies_updates":
+                    return {...state, filmsList: action.filmsList.updates, isReady: null};
+                case "movies_foreign":
+                    let oldArr = action.filmsList.report.movies;
+                    let newArr =  [];
+                    let position = 10;
+                    for (let i = 0; i < position; i++) {
+                        newArr.push(oldArr[i])
+                    }
+                    return {...state, filmsList: newArr, isReady: null};
+                default:
+                    return state;
+            }
+
         default:
             return state;
     }
@@ -104,16 +127,16 @@ export const modalHistoryAC = (modalHistory) => ({type: SET_MODAL_HISTORY, modal
 export const widthAC = (width) => ({type: SET_WIDTH, width: width});
 export const heightAC = (height) => ({type: SET_HEIGHT, height: height});
 const setTokenAC = (token) => ({type: SET_TOKEN, token: token});
-const getFilmsListAC = (filmsList) => ({type: GET_NEW_FILMS_LIST, filmsList: filmsList});
+const getFilmsListAC = (type, filmsList) => ({type: GET_NEW_FILMS_LIST, moviesType: type, filmsList: filmsList});
 
 
 
-export const getFilmsListThunkCreator = () => {
+export const getFilmsListThunkCreator = (type) => {
     return (dispatch) => {
         // dispatch(getFilmsListAC(dataTest));
-        API.getNewFilms()
+        API.getNewFilms(type)
             .then(data => {
-                dispatch(getFilmsListAC(data));
+                dispatch(getFilmsListAC(type, data));
             })
     }
 };

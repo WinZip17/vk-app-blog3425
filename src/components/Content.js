@@ -24,7 +24,7 @@ import Icon28FavoriteOutline from '@vkontakte/icons/dist/28/favorite_outline';
 const Content = (props) => {
 
     return (
-        <View id={props.id} activePanel="tabs" modal={props.modal}>
+        <View popout={props.state.isReady}  id={props.id} activePanel="tabs" modal={props.modal}>
             <Panel id="tabs" >
                 <PanelHeader
                     noShadow>
@@ -96,7 +96,7 @@ const Content = (props) => {
                     </Epic>
                 </FixedLayout>
                 <Group className="mainContainer">
-                    {props.state.isReady ? <Main setActiveModal={props.setActiveModal} setIframeUrl={props.setIframeUrl}
+                    {props.state.isReady === null ? <Main setActiveModal={props.setActiveModal} setIframeUrl={props.setIframeUrl}
                                                  list={props.state.filmsList} setMoviesInfo={props.setMoviesInfo}/> : <div></div>}
                 </Group>
             </Panel>

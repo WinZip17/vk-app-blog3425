@@ -7,7 +7,7 @@ const Main = (props) => {
 
 		return (
 				<List >
-					{props.list.updates.map((movies) => <MoviesCell
+					{props.list.map((movies) => <MoviesCell
 						key={movies.token} movies={movies} setIframeUrl={props.setIframeUrl}
 						setActiveModal={props.setActiveModal} setMoviesInfo={props.setMoviesInfo}/>)}
 				</List>

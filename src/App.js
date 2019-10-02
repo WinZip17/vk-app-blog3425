@@ -36,7 +36,7 @@ class dataApp extends React.Component {
         connectVK.send('VKWebAppUpdateConfig', {});
         this.props.setWidth(window.innerWidth);
         this.props.setHeight(window.innerHeight);
-        this.props.getFilmsList()
+        this.props.getFilmsList('movies_updates')
     }
 
     setActiveModal(activeModal) {
@@ -171,6 +171,9 @@ class dataApp extends React.Component {
                             <Div>
                                 <iframe src={this.props.main.defaultIframeUrl} width="360" frameBorder="0"
                                         allowFullScreen></iframe>
+                                <iframe src="https://kodik.info/video/43210/186b41cf0c7006d3870b8c02cfae5e89/720p" width="360" frameBorder="0"
+                                        allowFullScreen></iframe>
+
                                 <h1>{this.props.main.moviesInfo.title_ru}</h1>
                                 {this.props.main.moviesInfo.year ? <p>Год: {this.props.main.moviesInfo.year}</p> : ""}
                                 {this.props.main.moviesInfo.kinopoisk_id ? <p>Кинопоиск ID: {this.props.main.moviesInfo.kinopoisk_id}</p> : ""}
@@ -239,8 +242,8 @@ let mapDispatchToProps = (dispatch) => {
         setHeight: (height) => {
             dispatch(heightAC(height))
         },
-        getFilmsList: () => {
-            dispatch(getFilmsListThunkCreator());
+        getFilmsList: (type) => {
+            dispatch(getFilmsListThunkCreator(type));
         },
     };
 };
