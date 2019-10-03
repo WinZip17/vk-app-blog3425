@@ -22,7 +22,7 @@ import {
     getMovieListThunkCreator,
     heightAC,
     modalHistoryAC,
-    setCamripAC,
+    setCamripAC, setFetchingAC,
     setIframeUrlAC,
     setMoviesInfoAC,
     setOrderAC,
@@ -32,6 +32,7 @@ import {
     widthAC
 } from "../reducers/MainReducer";
 import EpicMenu from "./EpicMenu";
+import Div from "@vkontakte/vkui/dist/es6/components/Div/Div";
 
 const DataContent = (props) => {
 
@@ -48,7 +49,8 @@ const DataContent = (props) => {
                             <TabsItem
                                 onClick={() => {
                                     props.setActiveCategory("films");
-                                    props.setTypes("foreign-movie,russian-movie")}}
+                                    props.setTypes("foreign-movie,russian-movie")
+                                    window.scrollTo(0, 0)}}
                                 selected={props.state.activeCategory === 'films'}
                             >
                                 Фильмы
@@ -56,7 +58,8 @@ const DataContent = (props) => {
                             <TabsItem
                                 onClick={() => {
                                     props.setActiveCategory("cartoons");
-                                    props.setTypes("foreign-cartoon,russian-cartoon,soviet-cartoon")}}
+                                    props.setTypes("foreign-cartoon,russian-cartoon,soviet-cartoon")
+                                    window.scrollTo(0, 0)}}
                                 selected={props.state.activeCategory === 'cartoons'}
                             >
                                 Мультфильмы
@@ -64,7 +67,8 @@ const DataContent = (props) => {
                             <TabsItem
                                 onClick={() => {
                                     props.setActiveCategory("series");
-                                    props.setTypes("foreign-serial,cartoon-serial,documentary-serial,russian-serial,multi-part-film,russian-documentary-serial,russian-cartoon-serial")}}
+                                    props.setTypes("foreign-serial,cartoon-serial,documentary-serial,russian-serial,multi-part-film,russian-documentary-serial,russian-cartoon-serial");
+                                    window.scrollTo(0, 0)}}
                                 selected={props.state.activeCategory === 'series'}
                             >
                                 Сериалы
@@ -72,7 +76,8 @@ const DataContent = (props) => {
                             <TabsItem
                                 onClick={() => {
                                     props.setActiveCategory("anime");
-                                    props.setTypes("anime,anime-serial")}}
+                                    props.setTypes("anime,anime-serial");
+                                    window.scrollTo( 0, 0)}}
                                 selected={props.state.activeCategory === 'anime'}
                             >
                                 Аниме
@@ -83,8 +88,8 @@ const DataContent = (props) => {
                     <EpicMenu />
                 </FixedLayout>
                 <Group className="mainContainer">
-                    {props.state.filmsList.length === 0 ? <p><b>По Вашему запросу ничего не найдено. <br/> Попробуйте другие критерии поиска </b></p> : <div/>}
-                    {props.state.isReady === null ? <Main setActiveModal={props.setActiveModal} setIframeUrl={props.setIframeUrl}
+                    {props.state.filmsList.length === 0 ? <Div className="infoShell"><p><b>По Вашему запросу ничего не найдено. <br/> Попробуйте другие критерии поиска </b></p></Div> : <div/>}
+                    {props.state.isReady === null ? <Main  setFetching={props.setFetching} setActiveModal={props.setActiveModal} setIframeUrl={props.setIframeUrl}
                                                  list={props.state.filmsList} setMoviesInfo={props.setMoviesInfo}/> : <div></div>}
                 </Group>
             </Panel>
@@ -152,7 +157,11 @@ let mapDispatchToProps = (dispatch) => {
         },
         setYear: (year) => {
             dispatch(setYearAC(year))
-        }
+        },
+        setFetching: (fetching) => {
+
+            dispatch(setFetchingAC(fetching))
+        },
     };
 };
 

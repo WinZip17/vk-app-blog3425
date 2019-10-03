@@ -7,6 +7,10 @@
     margin-bottom: 60px;
 }
 
+.infoShell {
+    text-align: center;
+}
+
 .poster {
     max-width: 320px;
     width: 100%;

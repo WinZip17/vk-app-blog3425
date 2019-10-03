@@ -7,7 +7,7 @@ const instance = axios.create({
 
 export const API = {
     getMovieList(sort = 'updated_at', order = 'desc', types = 'foreign-movie',  camrip = true,  year,  genres = null){
-        let limit = 21;
+        let limit = 33;
         if (camrip === true) {camrip=""};
         let genresUrl = `&genres=${genres}`;
         if (genres === null) {genresUrl=""};
@@ -16,7 +16,6 @@ export const API = {
                 return response.data;
             })
             .catch(function (error) {
-                debugger
                 console.log(error);
             });
     },
@@ -26,8 +25,16 @@ export const API = {
                 return response.data;
             })
             .catch(function (error) {
-                debugger
                 console.log(error);
             });
     },
+    AddMovieList(url){
+        return axios.get(`${url}&with_material_data=true`)
+            .then(response => {
+                return response.data;
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
 };

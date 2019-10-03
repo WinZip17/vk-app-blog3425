@@ -10,10 +10,12 @@ import Icon28Notifications from '@vkontakte/icons/dist/28/notifications';
 import Icon28SettingsOutline from '@vkontakte/icons/dist/28/settings_outline';
 import Icon28FavoriteOutline from '@vkontakte/icons/dist/28/favorite_outline';
 import {connect} from "react-redux";
+import connectVK from '@vkontakte/vk-connect';
+
 import {
     activeCategoryAC,
     activeModalAC,
-    activeStoryAC, activeViewAC, getMovieListThunkCreator, setCamripAC, setOrderAC, setSortAC, setTypesAC
+    activeStoryAC, activeViewAC, getMovieListThunkCreator, goHomeAC, setCamripAC, setOrderAC, setSortAC, setTypesAC
 } from "../reducers/MainReducer";
 
 
@@ -25,11 +27,8 @@ const DataEpicMenu = (props) => {
                 <TabbarItem
                     onClick={() => {
                         props.setActiveStory("feed");
-                        props.setTypes("foreign-movie,russian-movie");
-                        props.setActiveCategory("films");
-                        props.setSort("updated_at");
-                        props.setCamrip(true);
-                        props.setOrder('desc');
+                        props.goHome();
+                        props.setActiveView("content")
                     }}
                     data-story="feed"
                 ><Icon28Newsfeed/></TabbarItem>
@@ -43,7 +42,8 @@ const DataEpicMenu = (props) => {
                 ><Icon28Search/></TabbarItem>
                 <TabbarItem
                     onClick={() => {
-                        props.setActiveStory("favorite")
+                        props.setActiveStory("favorite");
+                        connectVK.send("VKWebAppAddToFavorites", {});
                     }}
                     selected={props.state.activeStory === 'favorite'}
                     data-story="notifications"
@@ -105,6 +105,9 @@ let mapDispatchToProps = (dispatch) => {
         },
         setCamrip: (camrip) => {
             dispatch(setCamripAC(camrip))
+        },
+        goHome: () => {
+            dispatch(goHomeAC())
         },
     };
 };

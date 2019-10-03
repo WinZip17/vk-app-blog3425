@@ -2,7 +2,8 @@ import {API} from "../api/api";
 import React from "react";
 import ScreenSpinner from "@vkontakte/vkui/dist/es6/components/ScreenSpinner/ScreenSpinner";
 
-const SET_TOKEN = 'SET_TOKEN';
+
+const SET_FETCHING = 'SET_FETCHING';
 const SET_ARTICLE= 'SET_ARTICLE';
 const SET_FILTER= 'SET_FILTER';
 const SET_VIEW= 'SET_VIEW';
@@ -25,6 +26,8 @@ const SET_ACTIVE_MODAL_PAGE = 'SET_ACTIVE_MODAL_PAGE';
 const SET_MODAL_HISTORY = 'SET_MODAL_HISTORY';
 const CHANGE_LIST_OPTIONS = 'CHANGE_LIST_OPTIONS';
 const SET_MOVIE_GENRES = 'SET_MOVIE_GENRES';
+const GO_HOME = 'GO_HOME';
+const GET_ADD_MOVIE_LIST = 'GET_ADD_MOVIE_LIST';
 
 let initialState = {
     token: "",
@@ -78,13 +81,15 @@ let initialState = {
         camrip: true,
         genres: null
     },
-    search: ""
+    search: "",
+    fetching: false,
+    next_page: "",
+    text: '',
+    snackbar: null
 };
 
 const MainReducer = (state = initialState, action) => {
     switch (action.type) {
-        case SET_TOKEN:
-            return {...state, token: action.token};
         case SET_ARTICLE:
             return {...state, activeArticle: action.article};
         case SET_VIEW:
@@ -105,10 +110,6 @@ const MainReducer = (state = initialState, action) => {
         case SET_MODAL_HISTORY:
             return {...state, modalHistory: action.modalHistory};
         case SET_IFRAME_URL:
-            let url = action.defaultIframeUrl;
-            if (url.includes("http:")) {
-                url = "https" + url.slice(4);
-            }
             return {...state, defaultIframeUrl: action.defaultIframeUrl};
         case SET_MOVIE_INFO:
             return {...state, moviesInfo: action.moviesInfo};
@@ -117,7 +118,17 @@ const MainReducer = (state = initialState, action) => {
         case SET_HEIGHT:
             return {...state, height: action.height};
         case GET_NEW_MOVIE_LIST:
-            return {...state, filmsList: action.filmsList.results, isReady: null};
+            if ("next_page" in action.filmsList && action.filmsList.next_page.length > 1) {
+                return {...state, filmsList: action.filmsList.results, isReady: null, next_page: action.filmsList.next_page, fetching: true} ;
+            }
+            return {...state, filmsList: action.filmsList.results, isReady: null, next_page: null, fetching: false};
+        case GET_ADD_MOVIE_LIST:
+            let fetching = false;
+            if (action.filmsList.next_page !== null) {
+                fetching = true
+            }
+            return {...state, filmsList : [...state.filmsList, ...action.filmsList.results] , isReady: null, next_page: action.filmsList.next_page, fetching: fetching} ;
+
         case SET_MOVIE_SORT:
             if (action.sort === '') {return state}
             return {
@@ -168,6 +179,21 @@ const MainReducer = (state = initialState, action) => {
             return {...state, search: action.value};
         case CHANGE_LIST_OPTIONS:
             return {...state, currentListOptions: action.nextListOptions};
+        case SET_FETCHING:
+            return {...state, fetching: action.fetching};
+        case GO_HOME:
+            return {
+                ...state,
+                nextListOptions: {
+                    ...state.nextListOptions,
+                    limit: 21,
+                    sort: 'updated_at',
+                    order: 'desc',
+                    types: 'foreign-movie,russian-movie',
+                    year: "", //фильтр по году
+                    camrip: true,
+                    genres: null
+                }};
         case ON_CHANGE_FILTER_CATEGORY:
             switch (action.searchCategory) {
                 case "movie":
@@ -190,7 +216,8 @@ const MainReducer = (state = initialState, action) => {
     }
 
 };
-// const showPositionAC = (positionData) => ({type: SHOW_POSITION, positionData: positionData});
+
+
 export const activeArticleAC = (article) => ({type: SET_ARTICLE, article: article});
 export const activeViewAC = (activeView) => ({type: SET_VIEW, activeView: activeView});
 export const activeFilterAC = (activeFilter) => ({type: SET_FILTER, activeFilter: activeFilter});
@@ -207,6 +234,9 @@ export const onChangeSearchAC = (value) => ({type: ON_CHANGE_SEARCH, value: valu
 export const onChangeFilterCategoryAC = (searchCategory) => ({type: ON_CHANGE_FILTER_CATEGORY, searchCategory: searchCategory});
 export const onChangeListOptionsAC = (nextListOptions) => ({type: CHANGE_LIST_OPTIONS, nextListOptions: nextListOptions});
 const getMovieListAC = (filmsList) => ({type: GET_NEW_MOVIE_LIST, filmsList: filmsList});
+const getAddMovieListAC = (filmsList) => ({type: GET_ADD_MOVIE_LIST, filmsList: filmsList});
+export const goHomeAC = () => ({type: GO_HOME});
+export const setFetchingAC = (fetching) => ({type: SET_FETCHING, fetching: fetching});
 
 //сортировки
 export const setSortAC = (sort) => ({type: SET_MOVIE_SORT, sort: sort});
@@ -221,19 +251,27 @@ export const setGenresAC = (genres) => ({type: SET_MOVIE_GENRES, genres: genres}
 export const getMovieListThunkCreator = (listOptions) => {
     let {sort, order, types, camrip, year, genres} = listOptions;
     return (dispatch) => {
-        // dispatch(getFilmsListAC(dataTest));
         API.getMovieList(sort, order, types, camrip, year, genres)
             .then(data => {
                 dispatch(getMovieListAC(data));
             })
     }
 };
+
 export const searchMovieThunkCreator = (title) => {
     return (dispatch) => {
-        // dispatch(getFilmsListAC(dataTest));
         API.searchMovie(title)
             .then(data => {
                 dispatch(getMovieListAC(data));
+            })
+    }
+};
+
+export const getAddMovieListThunkCreator = (url) => {
+    return (dispatch) => {
+        API.AddMovieList(url)
+            .then(data => {
+                dispatch(getAddMovieListAC(data));
             })
     }
 };
