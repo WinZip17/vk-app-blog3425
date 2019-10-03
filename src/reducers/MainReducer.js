@@ -4,12 +4,8 @@ import ScreenSpinner from "@vkontakte/vkui/dist/es6/components/ScreenSpinner/Scr
 
 
 const SET_FETCHING = 'SET_FETCHING';
-const SET_ARTICLE= 'SET_ARTICLE';
-const SET_FILTER= 'SET_FILTER';
 const SET_VIEW= 'SET_VIEW';
 const SET_CATEGORY= 'SET_CATEGORY';
-const SET_WIDTH= 'SET_WIDTH';
-const SET_HEIGHT= 'SET_HEIGHT';
 const SET_STORY= 'SET_STORY';
 const SET_SCHEME= 'SET_SCHEME';
 const SET_IFRAME_URL= 'SET_IFRAME_URL';
@@ -18,7 +14,6 @@ const SET_MOVIE_SORT= 'SET_MOVIE_SORT';
 const SET_MOVIE_ORDER= 'SET_MOVIE_ORDER';
 const SET_MOVIE_TYPES= 'SET_MOVIE_TYPES';
 const SET_MOVIE_CAMRIP= 'SET_MOVIE_CAMRIP';
-const SET_MOVIE_YEAR= 'SET_MOVIE_YEAR';
 const GET_NEW_MOVIE_LIST= 'GET_NEW_MOVIE_LIST';
 const ON_CHANGE_SEARCH= 'ON_CHANGE_SEARCH';
 const ON_CHANGE_FILTER_CATEGORY= 'ON_CHANGE_FILTER_CATEGORY';
@@ -30,16 +25,12 @@ const GO_HOME = 'GO_HOME';
 const GET_ADD_MOVIE_LIST = 'GET_ADD_MOVIE_LIST';
 
 let initialState = {
-    token: "",
-    isVisible: false,
     activeView: "content",
     activeArticle: "films",
     activeFilter: "top",
     activeCategory: "films",
     searchCategory: "",
     subCategory: [],
-    width: "20",
-    height: "20",
     filmsList: {},
     activeStory: null,
     activeModal: null,
@@ -90,14 +81,10 @@ let initialState = {
 
 const MainReducer = (state = initialState, action) => {
     switch (action.type) {
-        case SET_ARTICLE:
-            return {...state, activeArticle: action.article};
         case SET_VIEW:
             return {...state, activeView: action.activeView};
         case SET_CATEGORY:
             return {...state, activeCategory: action.activeCategory};
-        case SET_FILTER:
-            return {...state, activeFilter: action.activeFilter};
         case SET_STORY:
             return {...state, activeStory: action.activeStory};
         case SET_SCHEME:
@@ -113,10 +100,6 @@ const MainReducer = (state = initialState, action) => {
             return {...state, defaultIframeUrl: action.defaultIframeUrl};
         case SET_MOVIE_INFO:
             return {...state, moviesInfo: action.moviesInfo};
-        case SET_WIDTH:
-            return {...state, width: action.width};
-        case SET_HEIGHT:
-            return {...state, height: action.height};
         case GET_NEW_MOVIE_LIST:
             if ("next_page" in action.filmsList && action.filmsList.next_page.length > 1) {
                 return {...state, filmsList: action.filmsList.results, isReady: null, next_page: action.filmsList.next_page, fetching: true} ;
@@ -128,7 +111,6 @@ const MainReducer = (state = initialState, action) => {
                 fetching = true
             }
             return {...state, filmsList : [...state.filmsList, ...action.filmsList.results] , isReady: null, next_page: action.filmsList.next_page, fetching: fetching} ;
-
         case SET_MOVIE_SORT:
             if (action.sort === '') {return state}
             return {
@@ -173,8 +155,6 @@ const MainReducer = (state = initialState, action) => {
                     genres: action.genres
                 }
             };
-        case SET_MOVIE_YEAR:
-            return {...state, ...state.listOptions.year = action.year};
         case ON_CHANGE_SEARCH:
             return {...state, search: action.value};
         case CHANGE_LIST_OPTIONS:
@@ -217,10 +197,7 @@ const MainReducer = (state = initialState, action) => {
 
 };
 
-
-export const activeArticleAC = (article) => ({type: SET_ARTICLE, article: article});
 export const activeViewAC = (activeView) => ({type: SET_VIEW, activeView: activeView});
-export const activeFilterAC = (activeFilter) => ({type: SET_FILTER, activeFilter: activeFilter});
 export const activeCategoryAC = (activeCategory) => ({type: SET_CATEGORY, activeCategory: activeCategory});
 export const activeStoryAC = (activeStory) => ({type: SET_STORY, activeStory: activeStory});
 export const activeModalAC = (activeModal) => ({type: SET_ACTIVE_MODAL_PAGE, activeModal: activeModal});
@@ -228,8 +205,6 @@ export const setSchemeAC = (scheme) => ({type: SET_SCHEME, scheme: scheme});
 export const setIframeUrlAC = (defaultIframeUrl) => ({type: SET_IFRAME_URL, defaultIframeUrl: defaultIframeUrl});
 export const setMoviesInfoAC = (moviesInfo) => ({type: SET_MOVIE_INFO, moviesInfo: moviesInfo});
 export const modalHistoryAC = (modalHistory) => ({type: SET_MODAL_HISTORY, modalHistory: modalHistory});
-export const widthAC = (width) => ({type: SET_WIDTH, width: width});
-export const heightAC = (height) => ({type: SET_HEIGHT, height: height});
 export const onChangeSearchAC = (value) => ({type: ON_CHANGE_SEARCH, value: value});
 export const onChangeFilterCategoryAC = (searchCategory) => ({type: ON_CHANGE_FILTER_CATEGORY, searchCategory: searchCategory});
 export const onChangeListOptionsAC = (nextListOptions) => ({type: CHANGE_LIST_OPTIONS, nextListOptions: nextListOptions});
@@ -243,7 +218,6 @@ export const setSortAC = (sort) => ({type: SET_MOVIE_SORT, sort: sort});
 export const setOrderAC = (order) => ({type: SET_MOVIE_ORDER, order: order});
 export const setTypesAC = (types) => ({type: SET_MOVIE_TYPES, types: types});
 export const setCamripAC = (camrip) => ({type: SET_MOVIE_CAMRIP, camrip: camrip});
-export const setYearAC = (year) => ({type: SET_MOVIE_YEAR, year: year});
 export const setGenresAC = (genres) => ({type: SET_MOVIE_GENRES, genres: genres});
 
 

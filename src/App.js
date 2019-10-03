@@ -5,22 +5,11 @@ import {
 } from '@vkontakte/vkui';
 import {connect} from "react-redux";
 import {
-    activeArticleAC,
-    activeCategoryAC,
-    activeFilterAC,
     activeModalAC,
     activeStoryAC, getAddMovieListThunkCreator,
     getMovieListThunkCreator,
-    heightAC,
-    modalHistoryAC, onChangeListOptionsAC,
-    setCamripAC, setFetchingAC,
-    setIframeUrlAC,
-    setMoviesInfoAC,
-    setOrderAC,
-    setSchemeAC,
-    setSortAC,
-    setTypesAC, setYearAC,
-    widthAC
+    modalHistoryAC, onChangeListOptionsAC, setFetchingAC,
+    setSchemeAC
 } from "./reducers/MainReducer";
 import Content from "./components/Content";
 import connectVK from '@vkontakte/vk-connect';
@@ -37,7 +26,6 @@ const MODAL_PAGE_SETTINGS = 'MODAL_PAGE_SETTINGS';
 const MODAL_PAGE_PLAY = 'MODAL_PAGE_PLAY';
 
 class dataApp extends React.Component {
-
 
     componentDidMount() {
         connectVK.send('VKWebAppUpdateConfig', {});
@@ -181,17 +169,8 @@ let mapStateToProps = (state) => {
 
 let mapDispatchToProps = (dispatch) => {
     return {
-        setActiveArticle: (article) => {
-            dispatch(activeArticleAC(article))
-        },
-        setActiveFilter: (activeFilter) => {
-            dispatch(activeFilterAC(activeFilter))
-        },
         setActiveStory: (activeStory) => {
             dispatch(activeStoryAC(activeStory))
-        },
-        setActiveCategory: (activeCategory) => {
-            dispatch(activeCategoryAC(activeCategory))
         },
         setActiveModal: (activeModel) => {
             dispatch(activeModalAC(activeModel))
@@ -199,38 +178,11 @@ let mapDispatchToProps = (dispatch) => {
         setModalHistory: (modalHistory) => {
             dispatch(modalHistoryAC(modalHistory))
         },
-        setIframeUrl: (defaultIframeUrl) => {
-            dispatch(setIframeUrlAC(defaultIframeUrl))
-        },
-        setMoviesInfo: (moviesInfo) => {
-            dispatch(setMoviesInfoAC(moviesInfo))
-        },
         setScheme: (scheme) => {
             dispatch(setSchemeAC(scheme.currentTarget.checked))
         },
-        setWidth: (width) => {
-            dispatch(widthAC(width))
-        },
-        setHeight: (height) => {
-            dispatch(heightAC(height))
-        },
         getMovieList: (listOptions) => {
             dispatch(getMovieListThunkCreator(listOptions));
-        },
-        setSort: (sort) => {
-            dispatch(setSortAC(sort))
-        },
-        setOrder: (order) => {
-            dispatch(setOrderAC(order))
-        },
-        setTypes: (types) => {
-            dispatch(setTypesAC(types))
-        },
-        setCamrip: (camrip) => {
-            dispatch(setCamripAC(camrip))
-        },
-        setYear: (year) => {
-            dispatch(setYearAC(year))
         },
         onChangeListOptions: (nextListOptions) => {
             dispatch(onChangeListOptionsAC(nextListOptions))

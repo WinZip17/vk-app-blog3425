@@ -9,22 +9,13 @@ import {
 import '@vkontakte/vkui/dist/vkui.css';
 import {connect} from "react-redux";
 import {
-    activeArticleAC,
     activeCategoryAC,
-    activeFilterAC,
-    activeModalAC,
     activeStoryAC, activeViewAC,
-    getMovieListThunkCreator,
-    heightAC,
-    modalHistoryAC, onChangeFilterCategoryAC, onChangeSearchAC, searchMovieThunkCreator,
+    onChangeFilterCategoryAC, onChangeSearchAC, searchMovieThunkCreator,
     setCamripAC, setGenresAC,
-    setIframeUrlAC,
-    setMoviesInfoAC,
     setOrderAC,
-    setSchemeAC,
     setSortAC,
-    setTypesAC, setYearAC,
-    widthAC
+    setTypesAC
 } from "../reducers/MainReducer";
 import EpicMenu from "./EpicMenu";
 import HeaderButton from "@vkontakte/vkui/dist/es6/components/HeaderButton/HeaderButton";
@@ -63,7 +54,6 @@ const DataSearchFilter = (props) => {
                         props.setActiveStory(null);
                         props.setActiveCategory(null);
                     }}>Назад</HeaderButton>}
-
                     noShadow>
                     Фильтры
                 </PanelHeader>
@@ -116,7 +106,6 @@ const DataSearchFilter = (props) => {
                             <Cell asideContent={<Switch   checked={props.state.nextListOptions.camrip} onChange={props.setCamrip}/>}>
                                 Качество CamRip
                             </Cell>
-
                         </FormLayoutGroup>
                     </FormLayout>
                 </Group>
@@ -146,7 +135,6 @@ const DataSearchFilter = (props) => {
 
         </View>
     );
-
 }
 
 
@@ -158,44 +146,14 @@ let mapStateToProps = (state) => {
 
 let mapDispatchToProps = (dispatch) => {
     return {
-        setActiveArticle: (article) => {
-            dispatch(activeArticleAC(article))
-        },
         setActiveView: (activeView) => {
             dispatch(activeViewAC(activeView))
-        },
-        setActiveFilter: (activeFilter) => {
-            dispatch(activeFilterAC(activeFilter))
         },
         setActiveStory: (activeStory) => {
             dispatch(activeStoryAC(activeStory))
         },
         setActiveCategory: (activeCategory) => {
             dispatch(activeCategoryAC(activeCategory))
-        },
-        setActiveModal: (activeModel) => {
-            dispatch(activeModalAC(activeModel))
-        },
-        setModalHistory: (modalHistory) => {
-            dispatch(modalHistoryAC(modalHistory))
-        },
-        setIframeUrl: (defaultIframeUrl) => {
-            dispatch(setIframeUrlAC(defaultIframeUrl))
-        },
-        setMoviesInfo: (moviesInfo) => {
-            dispatch(setMoviesInfoAC(moviesInfo))
-        },
-        setScheme: (scheme) => {
-            dispatch(setSchemeAC(scheme.currentTarget.checked))
-        },
-        setWidth: (width) => {
-            dispatch(widthAC(width))
-        },
-        setHeight: (height) => {
-            dispatch(heightAC(height))
-        },
-        getMovieList: (listOptions) => {
-            dispatch(getMovieListThunkCreator(listOptions));
         },
         setSort: (e) => {
             dispatch(setSortAC(e.currentTarget.value))
@@ -208,9 +166,6 @@ let mapDispatchToProps = (dispatch) => {
         },
         setCamrip: (e) => {
             dispatch(setCamripAC(e.currentTarget.checked))
-        },
-        setYear: (year) => {
-            dispatch(setYearAC(year))
         },
         onChangeSearch: (e) => {
             dispatch(onChangeSearchAC(e.currentTarget.value))

@@ -1,6 +1,5 @@
 import React from 'react';
 import '@vkontakte/vkui/dist/vkui.css';
-
 import Epic from '@vkontakte/vkui/dist/components/Epic/Epic';
 import Tabbar from '@vkontakte/vkui/dist/components/Tabbar/Tabbar';
 import TabbarItem from '@vkontakte/vkui/dist/components/TabbarItem/TabbarItem';
@@ -11,11 +10,9 @@ import Icon28SettingsOutline from '@vkontakte/icons/dist/28/settings_outline';
 import Icon28FavoriteOutline from '@vkontakte/icons/dist/28/favorite_outline';
 import {connect} from "react-redux";
 import connectVK from '@vkontakte/vk-connect';
-
 import {
-    activeCategoryAC,
     activeModalAC,
-    activeStoryAC, activeViewAC, getMovieListThunkCreator, goHomeAC, setCamripAC, setOrderAC, setSortAC, setTypesAC
+    activeStoryAC, activeViewAC,  goHomeAC
 } from "../reducers/MainReducer";
 
 
@@ -67,7 +64,6 @@ const DataEpicMenu = (props) => {
         }>
         </Epic>
     );
-
 }
 
 
@@ -87,24 +83,6 @@ let mapDispatchToProps = (dispatch) => {
         },
         setActiveView: (activeView) => {
             dispatch(activeViewAC(activeView))
-        },
-        setTypes: (types) => {
-            dispatch(setTypesAC(types))
-        },
-        getMovieList: (listOptions) => {
-            dispatch(getMovieListThunkCreator(listOptions));
-        },
-        setActiveCategory: (activeCategory) => {
-            dispatch(activeCategoryAC(activeCategory))
-        },
-        setSort: (sort) => {
-            dispatch(setSortAC(sort))
-        },
-        setOrder: (order) => {
-            dispatch(setOrderAC(order))
-        },
-        setCamrip: (camrip) => {
-            dispatch(setCamripAC(camrip))
         },
         goHome: () => {
             dispatch(goHomeAC())

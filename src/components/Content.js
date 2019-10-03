@@ -11,25 +11,13 @@ import {
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 import Main from "./Main";
-
 import {connect} from "react-redux";
 import {
-    activeArticleAC,
     activeCategoryAC,
-    activeFilterAC,
-    activeModalAC,
-    activeStoryAC,
-    getMovieListThunkCreator,
-    heightAC,
-    modalHistoryAC,
-    setCamripAC, setFetchingAC,
+    activeModalAC, setFetchingAC,
     setIframeUrlAC,
     setMoviesInfoAC,
-    setOrderAC,
-    setSchemeAC,
-    setSortAC,
-    setTypesAC, setYearAC,
-    widthAC
+    setTypesAC
 } from "../reducers/MainReducer";
 import EpicMenu from "./EpicMenu";
 import Div from "@vkontakte/vkui/dist/es6/components/Div/Div";
@@ -83,7 +71,6 @@ const DataContent = (props) => {
                                 Аниме
                             </TabsItem>
                         </HorizontalScroll>
-
                     </Tabs>
                     <EpicMenu />
                 </FixedLayout>
@@ -107,23 +94,11 @@ let mapStateToProps = (state) => {
 
 let mapDispatchToProps = (dispatch) => {
     return {
-        setActiveArticle: (article) => {
-            dispatch(activeArticleAC(article))
-        },
-        setActiveFilter: (activeFilter) => {
-            dispatch(activeFilterAC(activeFilter))
-        },
-        setActiveStory: (activeStory) => {
-            dispatch(activeStoryAC(activeStory))
-        },
         setActiveCategory: (activeCategory) => {
             dispatch(activeCategoryAC(activeCategory))
         },
         setActiveModal: (activeModel) => {
             dispatch(activeModalAC(activeModel))
-        },
-        setModalHistory: (modalHistory) => {
-            dispatch(modalHistoryAC(modalHistory))
         },
         setIframeUrl: (defaultIframeUrl) => {
             dispatch(setIframeUrlAC(defaultIframeUrl))
@@ -131,35 +106,10 @@ let mapDispatchToProps = (dispatch) => {
         setMoviesInfo: (moviesInfo) => {
             dispatch(setMoviesInfoAC(moviesInfo))
         },
-        setScheme: (scheme) => {
-            dispatch(setSchemeAC(scheme.currentTarget.checked))
-        },
-        setWidth: (width) => {
-            dispatch(widthAC(width))
-        },
-        setHeight: (height) => {
-            dispatch(heightAC(height))
-        },
-        getMovieList: (listOptions) => {
-            dispatch(getMovieListThunkCreator(listOptions));
-        },
-        setSort: (sort) => {
-            dispatch(setSortAC(sort))
-        },
-        setOrder: (order) => {
-            dispatch(setOrderAC(order))
-        },
         setTypes: (types) => {
             dispatch(setTypesAC(types))
         },
-        setCamrip: (camrip) => {
-            dispatch(setCamripAC(camrip))
-        },
-        setYear: (year) => {
-            dispatch(setYearAC(year))
-        },
         setFetching: (fetching) => {
-
             dispatch(setFetchingAC(fetching))
         },
     };
