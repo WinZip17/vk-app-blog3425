@@ -9,7 +9,7 @@ const Main = (props) => {
 				<List className="listDisplay" >
 					{props.list.map((movies) => <MoviesCell
 						key={movies.id} movies={movies} setIframeUrl={props.setIframeUrl}
-						setActiveModal={props.setActiveModal} setMoviesInfo={props.setMoviesInfo}/>)}
+						setActiveView={props.setActiveView} setMoviesInfo={props.setMoviesInfo}/>)}
 				</List>
 		);
 

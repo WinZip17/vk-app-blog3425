@@ -14,7 +14,7 @@ import Main from "./Main";
 import {connect} from "react-redux";
 import {
     activeCategoryAC,
-    activeModalAC, setFetchingAC,
+    activeViewAC, setFetchingAC,
     setIframeUrlAC,
     setMoviesInfoAC,
     setTypesAC
@@ -76,7 +76,7 @@ const DataContent = (props) => {
                 </FixedLayout>
                 <Group className="mainContainer">
                     {props.state.filmsList.length === 0 ? <Div className="infoShell"><p><b>По Вашему запросу ничего не найдено. <br/> Попробуйте другие критерии поиска </b></p></Div> : <div/>}
-                    {props.state.isReady === null ? <Main  setFetching={props.setFetching} setActiveModal={props.setActiveModal} setIframeUrl={props.setIframeUrl}
+                    {props.state.isReady === null ? <Main  setFetching={props.setFetching} setActiveView={props.setActiveView} setIframeUrl={props.setIframeUrl}
                                                  list={props.state.filmsList} setMoviesInfo={props.setMoviesInfo}/> : <div></div>}
                 </Group>
             </Panel>
@@ -97,9 +97,6 @@ let mapDispatchToProps = (dispatch) => {
         setActiveCategory: (activeCategory) => {
             dispatch(activeCategoryAC(activeCategory))
         },
-        setActiveModal: (activeModel) => {
-            dispatch(activeModalAC(activeModel))
-        },
         setIframeUrl: (defaultIframeUrl) => {
             dispatch(setIframeUrlAC(defaultIframeUrl))
         },
@@ -112,6 +109,10 @@ let mapDispatchToProps = (dispatch) => {
         setFetching: (fetching) => {
             dispatch(setFetchingAC(fetching))
         },
+        setActiveView: (activeView) => {
+            dispatch(activeViewAC(activeView))
+        }
+
     };
 };
 

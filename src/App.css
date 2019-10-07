@@ -1,64 +1,177 @@
-.mainContainer {
-    margin-top: 50px;
-    margin-bottom: 60px;
+body {
+    overflow-x: hidden;
 }
 
 .searchContainer {
     margin-bottom: 60px;
 }
 
-.infoShell {
-    text-align: center;
-}
 
-.poster {
-    max-width: 320px;
-    width: 100%;
-}
-
+/*отоброжение листа фильмов*/
 .listDisplay {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-between;
-    align-content: stretch;
-    align-items: stretch;
+    max-width: 600px;
+}
+
+.mainContainer {
+    margin-top: 50px;
+    margin-bottom: 60px;
+
+}
+
+.moviesCell > p {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+
+.moviesCell {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    margin: 5px;
+    width: 30%;
+    /*text-align: center;*/
 }
 
 .moviesCellDiv {
     height: 100%;
-
+   width: 100%;
 }
 
-.moviesCell {
-    cursor: pointer;
-    width: 30%;
+
+.poster {
+    max-height: 175px;
+    max-width: 100%;
+    /*width: 100%;*/
+    border-radius: 5px;
+}
+
+.moviesCell-rating {
     display: flex;
-    flex-direction: column;
-    margin: 5px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center ;
+    margin-top: 5px;
+    color: #7b3f00;
+
 }
 
-.moviesCell-text {
-    /*padding: 15px;*/
-    /*align-self: center;*/
-    /*flex-basis: 70%;*/
-    /*flex-grow: 4;*/
+.kpid {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
-.moviesCell-img {
-    /*flex-basis: 10%;*/
-    /*flex-grow: 1;*/
+.moviesCellYear {
+    display: inline-block;
+
 }
 
-iframe {
+.moviesCellYear {
+    color: #696969;
+}
+
+.movieNameList {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    margin-bottom: 0;
+    margin-top: 5px;
+}
+
+
+/*отображение вкладки просмотра фильмов*/
+
+.iframePreview {
     margin: 0 auto;
     display: block;
-    width: 100%;
 }
 
-h1, h2, p{
-    word-wrap: break-word;
-
+.buttonShell {
     width: 100%;
-    white-space: normal !important;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.previewDivMovieInfo {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 60px;
+}
+
+.previewHeadingText {
+    min-width: 110px;
+    width: 25%;
+    color: #696969;
+}
+
+.previewHeadingInfoText {
+    width: 75%;
+}
+
+.previewHeadingParam {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 10px;
+    border-bottom: 1px dotted #696969;
+}
+
+
+
+h1, h2 {
+     word-wrap: break-word;
+     width: 100%;
+     white-space: normal !important;
+ }
+
+
+
+
+/*кнопка смотреть фильм*/
+
+a.buttonPlay {
+    /*position: relative;*/
+    display: block;
+    font-family: Arial,Helvetica,FreeSans,"Liberation Sans","Nimbus Sans L",sans-serif;
+    font-size: 1.5em;
+    font-weight: 700;
+    color: rgb(245,245,245);
+    text-shadow: 0 -1px rgba(0,0,0,.1);
+    text-decoration: none;
+    user-select: none;
+    padding: .3em 1em;
+    outline: none;
+    border: none;
+    border-radius: 3px;
+    background: #0c9c0d linear-gradient(#82d18d, #0c9c0d);
+    box-shadow: inset #72de26 0 -1px 1px, inset 0 1px 1px #98ff98, #3caa3c 0 0 0 1px, rgba(0,0,0,.3) 0 2px 5px;
+    -webkit-animation: pulsate 1.2s linear infinite;
+    animation: pulsate 1.2s linear infinite;
+    width: 250px;
+    height: 30px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+a.buttonPlay:hover {
+    -webkit-animation-play-state: paused;
+    animation-play-state: paused;
+    cursor: pointer;
+}
+a.buttonPlay:active {
+    top: 1px;
+    color: #fff;
+    text-shadow: 0 -1px rgba(0,0,0,.3), 0 0 5px #ffd, 0 0 8px #fff;
+    box-shadow: 0 -1px 3px rgba(0,0,0,.3), 0 1px 1px #fff, inset 0 1px 2px rgba(0,0,0,.8), inset 0 -1px 0 rgba(0,0,0,.05);
+}
+@-webkit-keyframes pulsate {
+    50% {color: #fff; text-shadow: 0 -1px rgba(0,0,0,.3), 0 0 5px #ffd, 0 0 8px #fff;}
+}
+@keyframes pulsate {
+    50% {color: #fff; text-shadow: 0 -1px rgba(0,0,0,.3), 0 0 5px #ffd, 0 0 8px #fff;}
 }

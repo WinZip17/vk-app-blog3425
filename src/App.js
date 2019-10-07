@@ -20,6 +20,7 @@ import FormLayoutGroup from "@vkontakte/vkui/dist/es6/components/FormLayoutGroup
 import HeaderButton from "@vkontakte/vkui/dist/es6/components/HeaderButton/HeaderButton";
 import "./App.css"
 import SearchFilter from "./components/SearchFilter";
+import Preview from "./components/Preview";
 
 
 const MODAL_PAGE_SETTINGS = 'MODAL_PAGE_SETTINGS';
@@ -76,7 +77,6 @@ class dataApp extends React.Component {
         if (innerHeight+currentScroll > scrollHeight*0.80 && this.props.state.fetching && innerHeight+1000 < currentScroll) {
             this.props.setFetching(false);
             this.props.getAddMovieList(this.props.state.next_page);
-            console.log('конец близок');
         }
     }
 
@@ -155,6 +155,7 @@ class dataApp extends React.Component {
             <Root activeView={this.props.state.activeView}  >
                 <Content  id="content" modal={modal}/>
                 <SearchFilter id="search" modal={modal}/>
+                <Preview id="preview" modal={modal}/>
             </Root>
     )}
 };

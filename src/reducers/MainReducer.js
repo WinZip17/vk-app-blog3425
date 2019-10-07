@@ -101,6 +101,7 @@ const MainReducer = (state = initialState, action) => {
         case SET_MOVIE_INFO:
             return {...state, moviesInfo: action.moviesInfo};
         case GET_NEW_MOVIE_LIST:
+            if (!action.filmsList) {return state}
             if ("next_page" in action.filmsList && action.filmsList.next_page.length > 1) {
                 return {...state, filmsList: action.filmsList.results, isReady: null, next_page: action.filmsList.next_page, fetching: true} ;
             }

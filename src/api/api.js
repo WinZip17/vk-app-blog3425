@@ -11,7 +11,7 @@ export const API = {
         if (camrip === true) {camrip=""};
         let genresUrl = `&genres=${genres}`;
         if (genres === null) {genresUrl=""};
-        return instance.get(`list?token=${token}&limit=${limit}&sort=${sort}&order=${order}&types=${types}&camrip=${camrip}${genresUrl}&with_material_data=true`)
+        return instance.get(`list?token=${token}&limit=${limit}&sort=${sort}&order=${order}&types=${types}&camrip=${camrip}${genresUrl}&with_material_data=true&with_page_links=true`)
             .then(response => {
                 return response.data;
             })
@@ -20,7 +20,7 @@ export const API = {
             });
     },
     searchMovie(title){
-        return instance.get(`search?token=${token}&title=${title}&with_material_data=true`)
+        return instance.get(`search?token=${token}&title=${title}&with_material_data=true&with_page_links=true`)
             .then(response => {
                 return response.data;
             })
@@ -29,7 +29,7 @@ export const API = {
             });
     },
     AddMovieList(url){
-        return axios.get(`${url}&with_material_data=true`)
+        return axios.get(`${url}&with_material_data=true&with_page_links=true`)
             .then(response => {
                 return response.data;
             })
