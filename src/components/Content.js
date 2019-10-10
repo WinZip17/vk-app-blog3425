@@ -82,8 +82,7 @@ const DataContent = (props) => {
             </Panel>
         </View>
     );
-
-}
+};
 
 
 let mapStateToProps = (state) => {

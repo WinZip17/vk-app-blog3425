@@ -65,6 +65,7 @@ const DataSearchFilter = (props) => {
                         <Input value={props.state.search} onChange={props.onChangeSearch} type="text"
                                placeholder="введите название фильма"/>
                         {props.state.search ? <Button size="xl" onClick={() => {
+                            props.setTypes("search");
                             props.searchMovie(props.state.search);
                             props.setActiveView("content");
                             props.setActiveStory(null);
@@ -163,6 +164,9 @@ let mapDispatchToProps = (dispatch) => {
         },
         setTypesFilter: (e) => {
             dispatch(setTypesAC(e.currentTarget.value))
+        },
+        setTypes: (types) => {
+            dispatch(setTypesAC(types))
         },
         setCamrip: (e) => {
             dispatch(setCamripAC(e.currentTarget.checked))

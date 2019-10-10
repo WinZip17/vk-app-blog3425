@@ -31,7 +31,8 @@ class dataApp extends React.Component {
     componentDidMount() {
         connectVK.send('VKWebAppUpdateConfig', {});
         this.props.getMovieList(this.props.state.currentListOptions);
-        window.addEventListener('scroll', this.handleScroll)
+        window.addEventListener('scroll', this.handleScroll);
+        connectVK.send("VKWebAppSetViewSettings", {"action_bar_color": "none"});
     };
 
     componentDidUpdate() {
@@ -73,12 +74,11 @@ class dataApp extends React.Component {
             document.body.offsetHeight, document.documentElement.offsetHeight,
             document.body.clientHeight, document.documentElement.clientHeight
         );
-
         if (innerHeight+currentScroll > scrollHeight*0.80 && this.props.state.fetching && innerHeight+1000 < currentScroll) {
             this.props.setFetching(false);
             this.props.getAddMovieList(this.props.state.next_page);
         }
-    }
+    };
 
     render() {
         const modal = (
@@ -109,42 +109,6 @@ class dataApp extends React.Component {
                                     Темная тема
                                 </Cell>
                             </List>
-                        </FormLayoutGroup>
-                    </FormLayout>
-                </ModalPage>
-
-                <ModalPage
-                    className='MODAL_PAGE_PLAY'
-                    id={MODAL_PAGE_PLAY}
-                    onClose={() => {
-                        this.modalBack();
-                        this.props.setActiveStory(null)
-                    }}
-                    header={
-                        <ModalPageHeader
-                            left={IS_PLATFORM_ANDROID && <HeaderButton onClick={() => {
-                                this.modalBack()
-                            }}><Icon24Cancel/></HeaderButton>}
-                            right={<HeaderButton onClick={() => {
-                                this.modalBack()
-                            }}>{IS_PLATFORM_IOS ? "" : <Icon24Done/>}</HeaderButton>}
-                        >
-                        </ModalPageHeader>
-                    }
-                >
-                    <FormLayout>
-                        <FormLayoutGroup>
-                            <Div>
-                                <iframe src={this.props.state.defaultIframeUrl} width="360" frameBorder="0"
-                                        allowFullScreen title='play'></iframe>
-                                <h1>{this.props.state.moviesInfo.title}</h1>
-                                <p>Оригинальное название: <b>{this.props.state.moviesInfo.title_orig}</b></p>
-                                {this.props.state.moviesInfo.year ? <p>Год: {this.props.state.moviesInfo.year}</p> : ""}
-                                {this.props.state.moviesInfo.created_at ? <p>Добавлен: {this.props.state.moviesInfo.created_at.slice(0,10)}</p> : ""}
-                                {"material_data" in this.props.state.moviesInfo && 'actors' in  this.props.state.moviesInfo.material_data && this.props.state.moviesInfo.material_data.actors.length >0? <p>Актеры: {this.props.state.moviesInfo.material_data.actors.join(', ')}</p>: ""}
-                                {"material_data" in this.props.state.moviesInfo && 'genres' in  this.props.state.moviesInfo.material_data && this.props.state.moviesInfo.material_data.genres.length >0? <p>Жанр: {this.props.state.moviesInfo.material_data.genres.join(', ')}</p>: ""}
-                                {"material_data" in this.props.state.moviesInfo && 'description' in  this.props.state.moviesInfo.material_data && this.props.state.moviesInfo.material_data.description.length >0? <p>Описание: {this.props.state.moviesInfo.material_data.description}</p>: ""}
-                            </Div>
                         </FormLayoutGroup>
                     </FormLayout>
                 </ModalPage>

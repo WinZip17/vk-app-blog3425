@@ -3,7 +3,7 @@ import {
     FixedLayout,
     Panel,
     PanelHeader,
-    View, platform, IOS
+    View, platform, IOS, Div
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 import {connect} from "react-redux";
@@ -35,7 +35,7 @@ const viewMaterialDataInfo = (moviesInfo, text, name) => {
 // информация о фильме в корне объкта
 const viewInfo = (moviesInfo, text, name) => {
     if (name in moviesInfo && moviesInfo[name]) {
-        if (typeof(moviesInfo.material_data[name]) === "object") {
+        if (typeof(moviesInfo[name]) === "object") {
             return <div className='previewHeadingParam'><div className='previewHeadingText'> {text}</div> <div className='previewHeadingInfoText'>{moviesInfo[name].join(', ')}</div></div>
         }
         return <div className='previewHeadingParam'><div className='previewHeadingText'> {text}</div> <div className='previewHeadingInfoText'>{moviesInfo[name]}</div></div>
@@ -65,6 +65,8 @@ const DataPreview = (props) => {
                     <EpicMenu/>
                 </FixedLayout>
                 <div className='divPreview'>
+                    {/*<iframe src={props.state.defaultIframeUrl} width="360" frameBorder="0"*/}
+                    {/*        allowFullScreen title='play'></iframe>*/}
                     <div className="buttonShell" style={ style }>
                         <a href={props.state.defaultIframeUrl} className='buttonPlay' >Смотреть фильм</a>
                     </div>

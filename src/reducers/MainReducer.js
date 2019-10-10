@@ -1,7 +1,7 @@
 import {API} from "../api/api";
 import React from "react";
 import ScreenSpinner from "@vkontakte/vkui/dist/es6/components/ScreenSpinner/ScreenSpinner";
-
+import connectVK from '@vkontakte/vk-connect';
 
 const SET_FETCHING = 'SET_FETCHING';
 const SET_VIEW= 'SET_VIEW';
@@ -80,6 +80,7 @@ let initialState = {
 };
 
 const MainReducer = (state = initialState, action) => {
+
     switch (action.type) {
         case SET_VIEW:
             return {...state, activeView: action.activeView};
@@ -91,6 +92,9 @@ const MainReducer = (state = initialState, action) => {
             let schemeAttribute = document.createAttribute('scheme');
             schemeAttribute.value = action.scheme ? 'client_dark' : 'client_light';
             document.body.attributes.setNamedItem(schemeAttribute);
+            let status_bar_style = "light";
+            action.scheme ? status_bar_style = "dark": status_bar_style = "light";
+            connectVK.send("VKWebAppSetViewSettings", {"action_bar_color": "none"});
             return {...state, scheme: action.scheme};
         case SET_ACTIVE_MODAL_PAGE:
             return {...state, activeModal: action.activeModal};
