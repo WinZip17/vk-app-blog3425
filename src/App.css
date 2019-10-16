@@ -99,6 +99,14 @@ body {
     align-items: flex-end;
 }
 
+.errorShell {
+    width: 100%;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .previewDivMovieInfo {
     display: flex;
     flex-direction: column;

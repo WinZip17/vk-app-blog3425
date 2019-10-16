@@ -47,7 +47,7 @@ const viewInfo = (moviesInfo, text, name) => {
 const DataPreview = (props) => {
     const poster = "material_data" in props.state.moviesInfo  && "poster_url" in props.state.moviesInfo.material_data ? props.state.moviesInfo.material_data.poster_url || "../img/defaultPoster.png" : "../img/defaultPoster.png";
     const style = {background: `url(${poster}) no-repeat`, "backgroundPosition": "center center", "backgroundSize": "cover"};
-
+    console.log(props.state.blockList.includes(props.state.moviesInfo.title.toUpperCase()));
     return (
         <View id={props.id} activePanel="movie">
             <Panel id="movie">
@@ -67,9 +67,13 @@ const DataPreview = (props) => {
                 <div className='divPreview'>
                     {/*<iframe src={props.state.defaultIframeUrl} width="360" frameBorder="0"*/}
                     {/*        allowFullScreen title='play'></iframe>*/}
-                    <div className="buttonShell" style={ style }>
-                        <a href={props.state.defaultIframeUrl} className='buttonPlay' >Смотреть фильм</a>
-                    </div>
+                    {props.state.blockList.includes(props.state.moviesInfo.title.toUpperCase()) ?
+                        <div className="errorShell"> Видео удалено</div>
+                        : <div className="buttonShell" style={style}>
+                            <a href={props.state.defaultIframeUrl} className='buttonPlay'>Смотреть фильм</a>
+                        </div>
+                    }
+
                     <div>
                         <h1>{props.state.moviesInfo.title}</h1>
                         <div className='previewDivMovieInfo'>

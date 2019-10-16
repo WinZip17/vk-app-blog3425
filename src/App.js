@@ -1,12 +1,11 @@
 import React from 'react';
 import {
-    Div,
     IS_PLATFORM_ANDROID, IS_PLATFORM_IOS, ModalPage, ModalPageHeader, ModalRoot, List, Cell, Switch, Root
 } from '@vkontakte/vkui';
 import {connect} from "react-redux";
 import {
     activeModalAC,
-    activeStoryAC, getAddMovieListThunkCreator,
+    activeStoryAC, getAddMovieListThunkCreator, getBlockListThunkCreator,
     getMovieListThunkCreator,
     modalHistoryAC, onChangeListOptionsAC, setFetchingAC,
     setSchemeAC
@@ -23,8 +22,11 @@ import SearchFilter from "./components/SearchFilter";
 import Preview from "./components/Preview";
 
 
+
 const MODAL_PAGE_SETTINGS = 'MODAL_PAGE_SETTINGS';
-const MODAL_PAGE_PLAY = 'MODAL_PAGE_PLAY';
+
+
+
 
 class dataApp extends React.Component {
 
@@ -33,6 +35,15 @@ class dataApp extends React.Component {
         this.props.getMovieList(this.props.state.currentListOptions);
         window.addEventListener('scroll', this.handleScroll);
         connectVK.send("VKWebAppSetViewSettings", {"action_bar_color": "none"});
+        let scheme = this.getCookie('scheme') || null;
+        if (scheme) {
+            if (scheme === '1')  {
+                this.props.setScheme(1);
+            } else if (scheme === '2') {
+                this.props.setScheme(2);
+            }
+        };
+        this.props.getBlockList();
     };
 
     componentDidUpdate() {
@@ -78,6 +89,29 @@ class dataApp extends React.Component {
             this.props.setFetching(false);
             this.props.getAddMovieList(this.props.state.next_page);
         }
+    };
+
+
+
+    //прочитать значение темы из куки
+    getCookie = (name) => {
+        let cookie = " " + document.cookie;
+        let search = " " + name + "=";
+        let setStr = null;
+        let offset = 0;
+        let end = 0;
+        if (cookie.length > 0) {
+            offset = cookie.indexOf(search);
+            if (offset !== -1) {
+                offset += search.length;
+                end = cookie.indexOf(";", offset);
+                if (end === -1) {
+                    end = cookie.length;
+                }
+                setStr = unescape(cookie.substring(offset, end));
+            }
+        }
+        return(setStr);
     };
 
     render() {
@@ -144,6 +178,8 @@ let mapDispatchToProps = (dispatch) => {
             dispatch(modalHistoryAC(modalHistory))
         },
         setScheme: (scheme) => {
+            if (scheme === 1) return dispatch(setSchemeAC(false));
+            if (scheme === 2) return dispatch(setSchemeAC(true));
             dispatch(setSchemeAC(scheme.currentTarget.checked))
         },
         getMovieList: (listOptions) => {
@@ -158,7 +194,9 @@ let mapDispatchToProps = (dispatch) => {
         getAddMovieList: (url) => {
             dispatch(getAddMovieListThunkCreator(url))
         },
-
+        getBlockList: () => {
+            dispatch(getBlockListThunkCreator())
+        }
     };
 };
 

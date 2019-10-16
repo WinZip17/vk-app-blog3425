@@ -8,8 +8,8 @@
     "start": "cross-env PORT=10888 HTTPS=true react-scripts start",
     "build": "react-scripts build",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
-    "postbuild": "@powershell -NoProfile -ExecutionPolicy Unrestricted -Command ./post_build.ps1"
+    "postbuild": "@powershell -NoProfile -ExecutionPolicy Unrestricted -Command ./post_build.ps1",
+    "deploy": "gh-pages -d build"
   },
   "keywords": [],
   "author": "WinZip <wydo@protonmail.com>",

@@ -23,6 +23,7 @@ const CHANGE_LIST_OPTIONS = 'CHANGE_LIST_OPTIONS';
 const SET_MOVIE_GENRES = 'SET_MOVIE_GENRES';
 const GO_HOME = 'GO_HOME';
 const GET_ADD_MOVIE_LIST = 'GET_ADD_MOVIE_LIST';
+const GET_BLOCK__LIST = 'GET_BLOCK__LIST';
 
 let initialState = {
     activeView: "content",
@@ -76,7 +77,8 @@ let initialState = {
     fetching: false,
     next_page: "",
     text: '',
-    snackbar: null
+    snackbar: null,
+    blockList: []
 };
 
 const MainReducer = (state = initialState, action) => {
@@ -95,6 +97,18 @@ const MainReducer = (state = initialState, action) => {
             let status_bar_style = "light";
             action.scheme ? status_bar_style = "dark": status_bar_style = "light";
             connectVK.send("VKWebAppSetViewSettings", {"action_bar_color": "none"});
+
+            //записать значение темы в куку
+            const setCookie = (name, value, expires, path, domain, secure) => {
+                document.cookie = name + "=" + escape(value) +
+                    ((expires) ? "; expires=" + expires : "") +
+                    ((path) ? "; path=" + path : "") +
+                    ((domain) ? "; domain=" + domain : "") +
+                    ((secure) ? "; secure" : "");
+            };
+
+            let cookieScheme = action.scheme ? 2 : 1;
+            setCookie("scheme", cookieScheme);
             return {...state, scheme: action.scheme};
         case SET_ACTIVE_MODAL_PAGE:
             return {...state, activeModal: action.activeModal};
@@ -195,7 +209,14 @@ const MainReducer = (state = initialState, action) => {
                     return {...state, searchCategory: action.searchCategory, subCategory: anime};
                 default:
                     return {...state, searchCategory: action.searchCategory, subCategory: []};
-            }
+            };
+        case GET_BLOCK__LIST:
+            if (action.blockList === undefined) return state;
+            let blockList =  action.blockList.map((name) => {
+                return name.toUpperCase()
+            });
+            return {...state, blockList: blockList};
+
         default:
             return state;
     }
@@ -217,6 +238,7 @@ const getMovieListAC = (filmsList) => ({type: GET_NEW_MOVIE_LIST, filmsList: fil
 const getAddMovieListAC = (filmsList) => ({type: GET_ADD_MOVIE_LIST, filmsList: filmsList});
 export const goHomeAC = () => ({type: GO_HOME});
 export const setFetchingAC = (fetching) => ({type: SET_FETCHING, fetching: fetching});
+export const getBlockListAC = (blockList) => ({type: GET_BLOCK__LIST, blockList: blockList});
 
 //сортировки
 export const setSortAC = (sort) => ({type: SET_MOVIE_SORT, sort: sort});
@@ -251,6 +273,15 @@ export const getAddMovieListThunkCreator = (url) => {
         API.AddMovieList(url)
             .then(data => {
                 dispatch(getAddMovieListAC(data));
+            })
+    }
+};
+
+export const getBlockListThunkCreator = () => {
+    return (dispatch) => {
+        API.getBlockList()
+            .then(data => {
+                dispatch(getBlockListAC(data));
             })
     }
 };

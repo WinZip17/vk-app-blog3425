@@ -116,7 +116,7 @@ const DataSearchFilter = (props) => {
                             <Select top="Сортровка" placeholder="Сортировать по" onChange={props.setSort} >
                                 <option value="updated_at">Дате обнофления</option>
                                 <option value="year">Год фильма</option>
-                                <option value="created_at">Дате добавлени</option>
+                                <option value="created_at">Дате добавления</option>
                             </Select>
                             <Select top="Направление сортировки" placeholder="Направление сортировки" onChange={props.setOrder} >
                                 <option value="desc">По убыванию</option>

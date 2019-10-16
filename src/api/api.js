@@ -36,5 +36,15 @@ export const API = {
             .catch(function (error) {
                 console.log(error);
             });
+    },
+    getBlockList(){
+        return axios.get('https://blog3425.ru/vk-mini-kodik/blockList.json')
+            .then(response => {
+                console.log(response);
+                return response.data.blockList;
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     }
 };
