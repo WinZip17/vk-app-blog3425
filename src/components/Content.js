@@ -23,7 +23,6 @@ import EpicMenu from "./EpicMenu";
 import Div from "@vkontakte/vkui/dist/es6/components/Div/Div";
 
 const DataContent = (props) => {
-
     return (
         <View popout={props.state.isReady}  id={props.id} activePanel="tabs" modal={props.modal}>
             <Panel id="tabs" >
@@ -76,7 +75,7 @@ const DataContent = (props) => {
                 </FixedLayout>
                 <Group className="mainContainer">
                     {props.state.filmsList.length === 0 ? <Div className="infoShell"><p><b>По Вашему запросу ничего не найдено. <br/> Попробуйте другие критерии поиска </b></p></Div> : <div/>}
-                    {props.state.isReady === null ? <Main  setFetching={props.setFetching} setActiveView={props.setActiveView} setIframeUrl={props.setIframeUrl}
+                    {props.state.isReady === null ? <Main  scheme={props.state.scheme} setFetching={props.setFetching} setActiveView={props.setActiveView} setIframeUrl={props.setIframeUrl}
                                                  list={props.state.filmsList} setMoviesInfo={props.setMoviesInfo}/> : <div></div>}
                 </Group>
             </Panel>

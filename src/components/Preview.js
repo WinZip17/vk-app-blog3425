@@ -47,7 +47,6 @@ const viewInfo = (moviesInfo, text, name) => {
 const DataPreview = (props) => {
     const poster = "material_data" in props.state.moviesInfo  && "poster_url" in props.state.moviesInfo.material_data ? props.state.moviesInfo.material_data.poster_url || "../img/defaultPoster.png" : "../img/defaultPoster.png";
     const style = {background: `url(${poster}) no-repeat`, "backgroundPosition": "center center", "backgroundSize": "cover"};
-    console.log(props.state.blockList.includes(props.state.moviesInfo.title.toUpperCase()));
     return (
         <View id={props.id} activePanel="movie">
             <Panel id="movie">
@@ -79,7 +78,7 @@ const DataPreview = (props) => {
                         <div className='previewDivMovieInfo'>
                             {viewMaterialDataInfo(props.state.moviesInfo, "Рейтинг на КиноПоиске", "kinopoisk_rating")}
                             {viewMaterialDataInfo(props.state.moviesInfo, "Рейтинг на IMDb", "imdb_rating")}
-                            {viewInfo(props.state.moviesInfo, "Название", "title_orig")}
+                            {viewInfo(props.state.moviesInfo, "Название",   "title_orig")}
                             {viewInfo(props.state.moviesInfo, "Год", "year")}
                             {viewMaterialDataInfo(props.state.moviesInfo, "Жанр", "genres")}
                             {viewMaterialDataInfo(props.state.moviesInfo, "Страна", "countries")}

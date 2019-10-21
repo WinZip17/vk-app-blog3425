@@ -183,3 +183,26 @@ a.buttonPlay:active {
 @keyframes pulsate {
     50% {color: #fff; text-shadow: 0 -1px rgba(0,0,0,.3), 0 0 5px #ffd, 0 0 8px #fff;}
 }
+
+.circle {
+    border-radius: 25px;
+    height: 10px;
+    width: 10px;
+    position: absolute;
+    display: none;
+}
+
+.circleShell {
+    border-bottom-right-radius: 75%;
+    height: 14px;
+    width: 14px;
+    position: absolute;
+}
+
+.bright {
+    background-color: white;
+}
+
+.dark {
+    background-color: #232324;
+}
